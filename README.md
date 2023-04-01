@@ -18,10 +18,13 @@ step3:Long press the mic and speak to go to different pages as
 
 
 •Check balance
-Step4:To send money long press the mic and ask to send money to the person's name
 
+Step 4 :To send money long press the mic and ask "send money"
+ 
 
-Step5:For logging out or deleting the account long press and speak in the mic
+Step 5: After going to send page say "send 10rupees to receiver name" press send button 
+
+Step 6 :For logging out or deleting the account long press and speak in the mic
 
 
 Apk file is in the code section named "app-release.apk"
