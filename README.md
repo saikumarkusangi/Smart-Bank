@@ -22,3 +22,10 @@ Step4:To send money long press the mic and ask to send money to the person's nam
 
 
 Step5:For logging out or deleting the account long press and speak in the mic
+
+
+Apk file is in the code section named "smark bank.apk"
+
+video link :  
+
+https://youtu.be/PHI3JLFCfQs
