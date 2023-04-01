@@ -1,6 +1,7 @@
 import 'package:bank/constants/constants.dart';
 import 'package:bank/controllers/user_controller.dart';
 import 'package:bank/core.dart';
+import 'package:bank/views/features/home/home_page.dart';
 import 'package:bank/views/features/record/record_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -199,7 +200,7 @@ class _PinSetUpState extends State<PinSetUp> {
                                     snackPosition: SnackPosition.TOP);
                                 await provider.userdatafetch(
                                     widget.nickNmae, pin.text.trim());
-                                     Get.to(const Home());
+                                     Get.to( HomePage());
                               } else {
                                 SpeechController.listen(res
                                     .split(':')[2]

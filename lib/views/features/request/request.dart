@@ -1,5 +1,6 @@
 import 'package:bank/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../widgets/widgets.dart';
 
@@ -16,6 +17,7 @@ class _RequestPageState extends State<RequestPage> {
   Widget build(BuildContext context) {
     
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return Scaffold(
       
       backgroundColor: ThemeColors.secondary,

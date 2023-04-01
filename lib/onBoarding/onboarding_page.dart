@@ -1,0 +1,314 @@
+import 'package:bank/views/features/languagePage/language.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:introduction_screen/introduction_screen.dart';
+import 'package:flutter/foundation.dart';
+
+import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constants/colors.dart';
+import '../controllers/speech_controller.dart';
+import '../views/features/login/login_page.dart';
+
+class OnBoardingPage extends StatefulWidget {
+  const OnBoardingPage({Key? key}) : super(key: key);
+
+  @override
+  OnBoardingPageState createState() => OnBoardingPageState();
+}
+
+class OnBoardingPageState extends State<OnBoardingPage> {
+  permission() async {
+    var status = await Permission.microphone.status;
+    if (status.isDenied) {
+      Permission.microphone.request();
+    } else if (status.isGranted) {
+    } else if (status.isPermanentlyDenied) {
+      Permission.microphone.request();
+    } else if (status.isRestricted) {}
+  }
+
+  voice() async {
+    await SpeechController.listen("please Select your langauge");
+    await SpeechController.listen("దయచేసి మీ భాషను ఎంచుకోండి");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    permission();
+  }
+
+  final introKey = GlobalKey<IntroductionScreenState>();
+  bool selected = false;
+  int index = 0;
+  void _onIntroEnd(context) {
+    Get.off(const LoginPage());
+  }
+
+  Widget _buildFullscreenImage() {
+    return Image.asset(
+      'assets/images/1.jpeg',
+      fit: BoxFit.cover,
+      height: double.infinity,
+      width: double.infinity,
+      alignment: Alignment.center,
+    );
+  }
+
+  Widget _buildImage(String assetName, [double width = 350]) {
+    return Image.asset(assetName, width: width);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const bodyStyle = TextStyle(fontSize: 19.0);
+
+    const pageDecoration = PageDecoration(
+      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+      bodyTextStyle: bodyStyle,
+      bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      pageColor: Colors.white,
+      imagePadding: EdgeInsets.zero,
+    );
+
+    return SafeArea(
+      child: IntroductionScreen(
+      
+        key: introKey,
+        globalBackgroundColor: Colors.white,
+        allowImplicitScrolling: true,
+        autoScrollDuration: 0,
+        pages: [
+          PageViewModel(
+            titleWidget: Column(
+              children: const [
+                Text(
+                  "Select your langauge",
+                  style: TextStyle(fontSize: 24),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(" మీ భాషను ఎంచుకోండి", style: TextStyle(fontSize: 24))
+              ],
+            ),
+            bodyWidget: Column(
+              children: [
+                InkWell(
+                  onTap: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    setState(() {
+                      selected = true;
+                      index = 1;
+                    });
+                    var english = const Locale('en', 'US');
+                    Get.updateLocale(english);
+                    prefs.setString('language', 'en');
+                    //  prefs.setString('country', 'IN');
+                    SpeechController.listen('selected language'.tr);
+                    //  Get.off(const LoginPage());
+                  },
+                  child: Chip(
+                    avatar: (index == 1 && selected == true)
+                        ? const Icon(
+                            Icons.check,
+                            color: Colors.white,
+                          )
+                        : null,
+                    backgroundColor: ThemeColors.background,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    label: const Text('English'),
+                    labelStyle: const TextStyle(
+                        color: ThemeColors.secondary, fontSize: 26),
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                InkWell(
+                  onTap: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    setState(() {
+                      selected = true;
+                      index = 2;
+                    });
+                    var telugu = const Locale('te', 'IN');
+                    Get.updateLocale(telugu);
+                    prefs.setString('language', 'te');
+                    //  prefs.setString('country', 'IN');
+                    SpeechController.listen('selected language'.tr);
+                    // Get.off(const LoginPage());
+                  },
+                  child: Chip(
+                    avatar: (index == 2 && selected == true)
+                        ? const Icon(
+                            Icons.check,
+                            color: Colors.white,
+                          )
+                        : null,
+                    backgroundColor: ThemeColors.background,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    label: const Text('తెలుగు'),
+                    labelStyle:
+                        TextStyle(color: ThemeColors.secondary, fontSize: 26),
+                  ),
+                ),
+              ],
+            ),
+            image: _buildImage('assets/images/lan.png'),
+            decoration: pageDecoration,
+          ),
+          PageViewModel(
+          //  useScrollView: true,
+            title: "How to use".tr,
+            bodyWidget: Expanded(
+              child: Column(
+                children: [
+                  RichText(text: 
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Step 1 :',
+                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
+                      ),
+                      TextSpan(
+                         text:'des1'.tr,style: TextStyle(fontSize: 22,color: Colors.black),
+                      )
+                    ],
+                    
+                  )),
+                  SizedBox(height: 20,),
+                  
+                 RichText(text: 
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Step 2 :',
+                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
+                      ),
+                      TextSpan(
+                         text:'des2'.tr,style: TextStyle(fontSize: 22,color: Colors.black),
+                      )
+                    ],
+                    
+                  )),
+                    SizedBox(height: 20,),
+                  
+                 RichText(text: 
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Step 3 :',
+                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
+                      ),
+                      TextSpan(
+                         text:'des3'.tr,style: TextStyle(fontSize: 22,color: Colors.black),
+                      )
+                    ],
+                    
+                  )),
+
+                   SizedBox(height: 20,),
+                  
+                 RichText(text: 
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Step 4 :',
+                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
+                      ),
+                      TextSpan(
+                         text:'des4'.tr,style: TextStyle(fontSize: 22,color: Colors.black),
+                      )
+                    ],
+                    
+                  )),
+                ],
+              ),
+            ),
+            image: _buildImage('assets/images/1.jpeg'),
+            decoration: pageDecoration.copyWith(
+              bodyFlex: 6,
+              imageFlex: 4,
+              safeArea: 100,
+            ),
+          ),
+          PageViewModel(
+            title: "Commands Guide".tr,
+            bodyWidget: Expanded(
+              child: Column(
+               
+                children:  [
+                    Text('To go to home page'.tr,style: TextStyle(fontSize: 22),),
+                    SizedBox(height: 20,),
+                     Text('To go to profile page'.tr,style: TextStyle(fontSize: 22),),
+                    SizedBox(height: 20,),
+                     Text('To check balance'.tr,style: TextStyle(fontSize: 22),),
+                       SizedBox(height: 20,),
+                     Text('To see histoy'.tr,style: TextStyle(fontSize: 22),),
+                       SizedBox(height: 20,),
+                     Text('To send money'.tr,style: TextStyle(fontSize: 22),)
+                ],
+              ),
+            ),
+            decoration: pageDecoration.copyWith(
+              bodyFlex: 6,
+              imageFlex: 4,
+              bodyAlignment: Alignment.bottomCenter,
+              imageAlignment: Alignment.topCenter,
+            ),
+            image: _buildImage('assets/images/guide.png'),
+          ),
+        ],
+        onDone: () => _onIntroEnd(context),
+        //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+        showSkipButton: false,
+        
+        skipOrBackFlex: 0,
+        nextFlex: 0,
+        showBackButton: true,
+        //rtl: true, // Display as right-to-left
+        back: const Icon(
+          Icons.arrow_back,
+          size: 32,
+        ),
+        skip: const Text('Skip', style: TextStyle(fontWeight: FontWeight.w600)),
+        next: (selected)
+            ? const Icon(Icons.arrow_forward, size: 32)
+            : const Icon(
+                Icons.arrow_forward_rounded,
+                color: Colors.white,
+                size: 0,
+              ),
+        done: Text('Login'.tr,
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22)),
+        curve: Curves.fastLinearToSlowEaseIn,
+        controlsMargin: const EdgeInsets.all(16),
+        controlsPadding: kIsWeb
+            ? const EdgeInsets.all(12.0)
+            : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+        dotsDecorator: const DotsDecorator(
+          size: Size(10.0, 10.0),
+          color: Color(0xFFBDBDBD),
+          activeSize: Size(22.0, 10.0),
+          activeShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+          ),
+        ),
+        dotsContainerDecorator: const ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          ),
+        ),
+      ),
+    );
+  }
+}

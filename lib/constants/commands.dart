@@ -1,9 +1,11 @@
-class Commands{
+class Commands {
   static final loginPageCommand = [
     'go to login',
     'go to login page',
     'go to login screen',
     'login',
+    'log in',
+    'log in page',
     'login page',
     'login screen',
     'open login',
@@ -45,10 +47,9 @@ class Commands{
     'register',
     'registration',
     'new registration',
-
   ];
 
-   static final homePageCommand = [
+  static final homePageCommand = [
     'go to home',
     'go to homepage',
     'go to home page',
@@ -62,19 +63,29 @@ class Commands{
     'take me to home page',
     'take me to home',
     'take me home page',
-    'homepage'
+    'homepage',
+    'home page'
+  ];
+
+  static final logoutCommand = [
+    'log out','logout'
   ];
 
   static final checkBalanceCommand = [
     'check account balance',
     'check my balance'
-    'show balance',
-    'my balance',
+        'show balance',
+    'check my account balance'
+        'check my account'
+        'my balance',
     'account balance',
     'my account balance',
     'balance',
-   
   ];
+
+  static final selectTelugu = ['select telugu', 'telugu', "Telugu"];
+
+  static final selectEnglish = ['select english', 'english'];
 
   static final profilePageCommand = [
     'go to profile',
@@ -99,24 +110,21 @@ class Commands{
     'go to back page',
     'go to back screen',
     'back',
-    'back page',
+    'go back'
+        'go back page'
+        'back page',
     'back screen',
-    'open profile',
-    'open profile page',
-    'open profile screen',
     'take me to back page',
     'take me to back',
     'take me previous page',
     'previous page',
     'previous screen',
-    
   ];
 
   static final sendCommand = [
     'go to send page',
     'go to send',
     'go to send screen',
-    'send',
     'send money page',
     'send money screen',
     'open send page',
@@ -131,6 +139,33 @@ class Commands{
     'transfer',
     'transfer money',
     'money transfer'
-    
   ];
+
+  static final transactionsCommand = [
+    'go to transactions page',
+    'go to transaction page',
+    'go to transaction',
+    'go to transaction screen',
+    'show transaction',
+    'show history',
+    'transactions',
+    'transactions details',
+    'history'
+  ];
+
+  static final homePageCommandTelugu = ['హోం పేజి కి వెళ్ళు','హోమ్',];
+
+  static final loginPageCommandTelugu = ['లాగిన్పేజీ కి వెళ్ళు', 'లాగిన్'];
+
+  static final logoutCommandTelugu = ['లాగ్ అవుట్'];
+
+  static final deleteAccountCommandTelugu = [''];
+
+  static final sendCommandTelugu = ['డబ్బులు పంపండి'];
+
+  static final profileCommandTelugu = ['ప్రొఫైల్ పేజ్ కి వెళ్ళు','ప్రొఫైల్ పేజ్'];
+
+  static final createCommandTelugu = ['కొత్త ఖాతా'];
+
+  static final balanceCommandtelugu = ['సంతులనం','ఖాతా'];
 }

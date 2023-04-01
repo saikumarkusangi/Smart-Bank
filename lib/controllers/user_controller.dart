@@ -1,6 +1,6 @@
-import 'dart:convert';
+import 'dart:async';
 
-import 'package:bank/models/user_model.dart';
+import 'package:bank/controllers/history_controller.dart';
 import 'package:bank/services/network_services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,11 +15,51 @@ class UserController extends ChangeNotifier {
   String pinNumber = '';
   String upiId = '';
   String currentBalance = '';
-  
+  List<Map<String, dynamic>> history = [];
+  bool balance = false;
 
   UserController() {
     userdatafetch('', '');
     send(to: '', ammount: 0, from: '');
+  }
+
+  void showBalance(val) {
+    balance = val;
+    notifyListeners();
+    Timer(const Duration(seconds: 5), () {
+      balance = false;
+      notifyListeners();
+    });
+  }
+
+  clearData() {
+    userdata = [];
+    nickName = '';
+    userName = '';
+    fullName = '';
+    phoneNumber = '';
+    pinNumber = '';
+    upiId = '';
+    currentBalance = '';
+    history = [];
+    notifyListeners();
+  }
+
+  Future<void> transactions({required String nickName}) async {
+    final response = await NetworkServices.history(nickName.trim());
+    response.toString().split('}').map((e) {
+      history.add({
+        "date": e.split(':')[2].split(',')[0].replaceAll(RegExp("'"), ''),
+        "time": e.split(':')[3].replaceAll(RegExp("'"), "") +
+            ":" +
+            e.split(':')[4].replaceAll(RegExp("'"), ""),
+        "to-from": e.split(':')[6].split(',')[0].replaceAll(RegExp("'"), ''),
+        "amount": e.split(':')[7].split(',')[0].replaceAll(RegExp("'"), ''),
+        "balance": e.split(':')[8].split(',')[0].replaceAll(RegExp("'"), '')
+      });
+    }).toList();
+
+    notifyListeners();
   }
 
   Future<String> send(
@@ -36,12 +76,10 @@ class UserController extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     final data = await NetworkServices.userlogin(fnickName, fpinNumber);
-    print("&&&&&&"+data);
     isLoading = false;
     notifyListeners();
-    
-    userdata = data.split(',');
 
+    userdata = data.split(',');
     nickName = userdata[1].toString().split(':')[1].replaceAll(RegExp("'"), '');
     fullName = userdata[2].toString().split(':')[1].replaceAll(RegExp("'"), '');
     userName = userdata[3].toString().split(':')[1].replaceAll(RegExp("'"), '');
@@ -63,10 +101,19 @@ class UserController extends ChangeNotifier {
                 1);
 
     notifyListeners();
+    checkBalance(nickName: nickName);
+    transactions(nickName: nickName);
+  }
+
+  Future<String> checkBalance({required String nickName}) async {
     final Balance = await NetworkServices.currentBalance(nickName);
-    currentBalance = Balance.toString()
-        .split(':')[1]
-        .substring(0, Balance.toString().split(':')[1].length - 3);
+    isLoading = true;
     notifyListeners();
+    currentBalance =
+        Balance.toString().split(':')[1].replaceAll(RegExp('}'), '');
+    notifyListeners();
+    isLoading = false;
+    notifyListeners();
+    return Balance.toString().split(':')[1].replaceAll(RegExp('}'), '');
   }
 }

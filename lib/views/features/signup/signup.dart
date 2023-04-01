@@ -8,6 +8,7 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/controllers.dart';
 import '../../../controllers/mic_controller.dart';
+import '../../../controllers/textFieldController/textfield_controller.dart.dart';
 import '../../../main.dart';
 import '../../views.dart';
 import '../../widgets/widgets.dart';
@@ -36,8 +37,14 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+    final textfieldcontroller = Provider.of<TextFieldController>(context);
 
+    // userName.text = textfieldcontroller.user;
+    // fullName.text = textfieldcontroller.full;
+    // mobileNumber.text = textfieldcontroller.mobile;
+    // nickName.text = textfieldcontroller.Nick;
+    final keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+    print(Get.currentRoute);
     final micProvider = Provider.of<MicController>(context);
 
     const focusedBorderColor = Colors.white;
@@ -79,7 +86,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: Image.asset(Images.loginbanner)),
                 ),
-                 Text(
+                Text(
                   'Create Account'.tr,
                   style: TextStyle(
                       color: Colors.white,
@@ -106,7 +113,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           autofocus: true,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "enter nick name".tr;
+                              return '${'enter'.tr} ${'nick name'.tr}';
                             }
                             return null;
                           },
@@ -117,7 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               hintStyle: const TextStyle(fontSize: 18),
                               fillColor: Colors.white,
                               filled: true,
-                              hintText: 'enter nick name'.tr,
+                              hintText: '${'enter'.tr} ${'nick name'.tr}',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10))),
                         ),
@@ -129,7 +136,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           autofocus: true,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "enter user name".tr;
+                              return '${'enter'.tr} ${'user name'.tr}';
                             }
                             return null;
                           },
@@ -139,7 +146,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               hintStyle: const TextStyle(fontSize: 18),
                               fillColor: Colors.white,
                               filled: true,
-                              hintText: 'enter user name'.tr,
+                              hintText: '${'enter'.tr} ${'user name'.tr}',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10))),
                         ),
@@ -153,7 +160,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           style: const TextStyle(fontSize: 20),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "enter full name".tr;
+                              return '${'enter'.tr} ${'full name'.tr}';
                             }
                             return null;
                           },
@@ -161,13 +168,13 @@ class _SignUpPageState extends State<SignUpPage> {
                               hintStyle: const TextStyle(fontSize: 18),
                               fillColor: Colors.white,
                               filled: true,
-                              hintText: 'enter full name'.tr,
+                              hintText: '${'enter'.tr} ${'full name'.tr}',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10))),
                           // onFieldSubmitted: (value) => FocusScope.of(context).requestFocus(focusNode1) ,
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         TextFormField(
                           // focusNode: focusNode1,
@@ -177,7 +184,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           controller: mobileNumber,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "enter mobile number";
+                              return '${'enter'.tr} ${'Mobile'.tr}';
                             }
                             return null;
                           },
@@ -185,7 +192,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               hintStyle: const TextStyle(fontSize: 18),
                               fillColor: Colors.white,
                               filled: true,
-                              hintText: 'enter mobile number',
+                              hintText: '${'enter'.tr} ${'Mobile'.tr}',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10))),
                           // onFieldSubmitted: (value) => FocusManager.instance.primaryFocus?.unfocus()
@@ -204,11 +211,11 @@ class _SignUpPageState extends State<SignUpPage> {
                               ));
                             }
                           },
-                          child: const Chip(
+                          child: Chip(
                             backgroundColor: Colors.white,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
-                            label: Text('Next'),
+                            label: Text('Next'.tr),
                             labelStyle: TextStyle(
                                 color: ThemeColors.background, fontSize: 26),
                           ),
@@ -218,14 +225,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         RichText(
                             text: TextSpan(children: [
-                          const TextSpan(
-                              text: "Already have an account? ",
+                          TextSpan(
+                              text: "Already have an account?".tr,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18)),
                           TextSpan(
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () => Get.to(LoginPage()),
-                              text: 'Login',
+                              text: 'Login'.tr,
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,

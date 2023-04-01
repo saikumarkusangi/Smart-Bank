@@ -1,14 +1,15 @@
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:bank/constants/constants.dart';
 import 'package:bank/controllers/speech_controller.dart';
 import 'package:bank/controllers/user_controller.dart';
 import 'package:bank/views/features/home/home.dart';
+import 'package:bank/views/features/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../../../controllers/textFieldController/textfield_controller.dart.dart';
 import '../../widgets/widgets.dart';
 
 class SendPage extends StatefulWidget {
@@ -19,12 +20,25 @@ class SendPage extends StatefulWidget {
 }
 
 class _SendPageState extends State<SendPage> {
+  @override
+  void dispose() {
+    final textfieldcontroller = Provider.of<TextFieldController>(context);
+    // TODO: implement dispose
+    super.dispose();
+    textfieldcontroller.newAmmount(value: '');
+    textfieldcontroller.newrecevierName(value: '');
+  }
+
   final _ammount = TextEditingController();
   final to = TextEditingController();
   final focusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final textfieldcontroller = Provider.of<TextFieldController>(context);
+
+    to.text = textfieldcontroller.receviername;
+    _ammount.text = textfieldcontroller.ammount;
     @override
     final provider = Provider.of<UserController>(context);
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
@@ -68,13 +82,15 @@ class _SendPageState extends State<SendPage> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.8,
-                                        child: Text(
-                                          "sending money to ${to.text}",
-                                          style: const TextStyle(
-                                              overflow: TextOverflow.ellipsis,
-                                              color: Colors.black,
-                                              fontSize: 28),
-                                          maxLines: 1,
+                                        child: Center(
+                                          child: Text(
+                                            "sending money to ${to.text}",
+                                            style: const TextStyle(
+                                                overflow: TextOverflow.ellipsis,
+                                                color: Colors.black,
+                                                fontSize: 18),
+                                            maxLines: 1,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -89,7 +105,7 @@ class _SendPageState extends State<SendPage> {
                               controller: to,
                               keyboardType: TextInputType.text,
                               style: const TextStyle(fontSize: 20),
-                              autofocus: true,
+                              //autofocus: true,
                               decoration: InputDecoration(
                                   hintStyle: const TextStyle(fontSize: 18),
                                   fillColor: Colors.white,
@@ -102,7 +118,7 @@ class _SendPageState extends State<SendPage> {
                                       .requestFocus(focusNode),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Enter recevier name';
+                                  return 'enter recevier name'.tr;
                                 }
                                 return null;
                               },
@@ -116,12 +132,14 @@ class _SendPageState extends State<SendPage> {
                           child: Form(
                             key: formKey,
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 const SizedBox(
                                   height: 40,
                                 ),
                                 TextFormField(
+                                  textAlignVertical: TextAlignVertical.center,
                                   focusNode: focusNode,
                                   validator: (val) {
                                     if (val!.isEmpty) {
@@ -140,7 +158,7 @@ class _SendPageState extends State<SendPage> {
                                   decoration: const InputDecoration(
                                       focusedBorder: InputBorder.none,
                                       enabledBorder: InputBorder.none,
-                                      prefix: Text(
+                                      prefixIcon: Text(
                                         '₹',
                                         style: TextStyle(
                                             fontSize: 62,
@@ -178,18 +196,22 @@ class _SendPageState extends State<SendPage> {
                                             1)
                                     .trim() ==
                                 'success') {
-                           SpeechController.listen(
+                              SpeechController.listen(
                                   "Money successfully sent to ${to.text}");
                               Get.snackbar('Success',
                                   "Money successfully sent to ${to.text}",
                                   snackPosition: SnackPosition.TOP);
+                                   provider.currentBalance = '';
+                                provider.history.clear();
                               await provider
-                                  .userdatafetch(
-                                      provider.nickName, provider.pinNumber)
-                                  .then((value) {
-                                Get.to(const Home());
+                                  .userdatafetch(provider.nickName.trim(),
+                                      provider.pinNumber.trim())
+                                  .whenComplete(() {
+                                 
+                                Get.to(HomePage());
                               });
                             }
+                            print(response);
                             if (response
                                     .split(':')[2]
                                     .replaceAll(RegExp("'"), '') ==
@@ -205,7 +227,7 @@ class _SendPageState extends State<SendPage> {
                                     .split(':')[2]
                                     .replaceAll(RegExp("'"), '') ==
                                 " maximum transaction amount limit is 100 rupees}") {
-                                    SpeechController.listen(
+                              SpeechController.listen(
                                   "maximum transaction amount limit is 100 rupees");
                               Get.snackbar('Something went wrong',
                                   "maximum transaction amount limit is 100 rupees",
@@ -214,7 +236,7 @@ class _SendPageState extends State<SendPage> {
                           }
                         },
                         color: ThemeColors.green,
-                        child:  Text(
+                        child: Text(
                           'Send'.tr,
                           style: TextStyle(color: Colors.black, fontSize: 28),
                         ),

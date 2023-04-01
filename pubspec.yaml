@@ -2,7 +2,7 @@ name: bank
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.2 <3.0.0'
+  sdk: ">=2.19.2 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -40,11 +40,16 @@ dependencies:
   flutter_tts: ^3.6.3
   get: ^4.6.5
   http: ^0.13.5
+  introduction_screen: ^3.1.7
+  just_audio: ^0.9.32
   multiavatar: ^0.1.5
+  permission_handler: ^10.2.0
   pinput: ^2.2.31
   process_run: ^0.12.5+2
   provider: ^6.0.5
+  shared_preferences: ^2.0.20
   speech_to_text: ^6.1.1
+  translator: ^0.1.7
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -55,7 +60,6 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -66,6 +70,15 @@ flutter:
     - assets/images/login_banner.png
     - assets/images/card_template.png
     - assets/images/banner.png
+    - assets/images/upi_logo.jpg
+    - assets/images/cities.png
+    - assets/audios/listening.mp3
+    - assets/audios/notlistening.mp3
+    - assets/images/logo.jpg
+    - assets/images/1.jpeg
+    - assets/images/2.jpeg
+    - assets/images/lan.png
+    - assets/images/guide.png
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

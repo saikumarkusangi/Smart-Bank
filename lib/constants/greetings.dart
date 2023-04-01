@@ -8,9 +8,9 @@ class Greetings{
 
   static greetingText (){
     var time = DateTime.now().hour;
-    if (time < 12) {
+    if (time > 6 && time < 12) {
       return 'Good Morning'.tr;
-    } else if(time >= 12 && time < 6) {
+    } else if(time >  12 && time < 17) {
       return 'Good Afternoon'.tr;
     }
     else {

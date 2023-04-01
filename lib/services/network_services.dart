@@ -75,13 +75,41 @@ class NetworkServices {
     }
   }
 
+
+    static update<UserData>(String key,value,nickname) async {
+    try {
+      final response = await http.post(
+        Uri.parse(ApiKey.url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(
+{
+    "action":"update",
+    'nick_name':nickname.toString(),
+    "key":key.toString(),
+    "value":value.toString()
+}),
+      );
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        return response.body;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+
+     
+
   static currentBalance<UserData>(String nickName) async {
     try {
       final response = await http.post(
         Uri.parse(ApiKey.url),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(
-          {"action": "balance", "nick_name": "sandeep"},
+          {"action": "balance", "nick_name": nickName.trim()},
         ),
       );
 
@@ -102,8 +130,8 @@ class NetworkServices {
           {
             "action": "transfer",
             "amount": ammount,
-            "from_user": from,
-            "to_user": to
+            "from_user": from.trim(),
+            "to_user": to.trim()
           },
         ),
       );
