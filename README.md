@@ -26,8 +26,13 @@ Step 5: After going to send page say "send 10rupees to receiver name" press send
 
 Step 6 :For logging out or deleting the account long press and speak in the mic
 
+App APK:
 
 Apk file is in the code section named "app-release.apk"
+
+----or-----
+
+you can download it from here : https://appsenjoy.com/en/JYFdeTYTev3phfM/file
 
 video link :  
 
