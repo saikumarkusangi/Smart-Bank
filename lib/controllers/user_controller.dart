@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:bank/controllers/history_controller.dart';
 import 'package:bank/services/network_services.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class UserController extends ChangeNotifier {
   bool isLoading = false;
@@ -50,9 +48,7 @@ class UserController extends ChangeNotifier {
     response.toString().split('}').map((e) {
       history.add({
         "date": e.split(':')[2].split(',')[0].replaceAll(RegExp("'"), ''),
-        "time": e.split(':')[3].replaceAll(RegExp("'"), "") +
-            ":" +
-            e.split(':')[4].replaceAll(RegExp("'"), ""),
+        "time": "${e.split(':')[3].replaceAll(RegExp("'"), "")}:${e.split(':')[4].replaceAll(RegExp("'"), "")}",
         "to-from": e.split(':')[6].split(',')[0].replaceAll(RegExp("'"), ''),
         "amount": e.split(':')[7].split(',')[0].replaceAll(RegExp("'"), ''),
         "balance": e.split(':')[8].split(',')[0].replaceAll(RegExp("'"), '')
@@ -106,14 +102,14 @@ class UserController extends ChangeNotifier {
   }
 
   Future<String> checkBalance({required String nickName}) async {
-    final Balance = await NetworkServices.currentBalance(nickName);
+    final balance = await NetworkServices.currentBalance(nickName);
     isLoading = true;
     notifyListeners();
     currentBalance =
-        Balance.toString().split(':')[1].replaceAll(RegExp('}'), '');
+        balance.toString().split(':')[1].replaceAll(RegExp('}'), '');
     notifyListeners();
     isLoading = false;
     notifyListeners();
-    return Balance.toString().split(':')[1].replaceAll(RegExp('}'), '');
+    return balance.toString().split(':')[1].replaceAll(RegExp('}'), '');
   }
 }

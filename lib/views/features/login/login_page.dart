@@ -1,13 +1,7 @@
-import 'dart:math';
-
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:bank/constants/constants.dart';
 import 'package:bank/controllers/controllers.dart';
-import 'package:bank/controllers/history_controller.dart';
 import 'package:bank/controllers/textFieldController/textfield_controller.dart.dart';
 import 'package:bank/controllers/user_controller.dart';
-import 'package:bank/core.dart';
-import 'package:bank/views/features/home/home.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,10 +38,9 @@ class _LoginPageState extends State<LoginPage> {
   final focusNode = FocusNode();
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     nickNameController.dispose();
     pinController.dispose();
+    super.dispose();
   }
 
   @override
@@ -55,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
     final textfieldcontroller = Provider.of<TextFieldController>(context);
     final provider = Provider.of<UserController>(context);
     //final histroy = Provider.of<HistoryController>(context);
-  
+
     nickNameController.text = textfieldcontroller.nickname;
 
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
@@ -79,26 +72,20 @@ class _LoginPageState extends State<LoginPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       if (formKey.currentState!.validate()) {
         try {
-          print('**********************');
-          print(prefs.getString('nickName'));
-
           if (prefs.getString('nickName') == null) {
-            print('############################');
             await provider.userdatafetch(
                 nickNameController.text.trim(), pinController.text.trim());
 
             if (pinController.text == provider.pinNumber.trim()) {
               SpeechController.listen("you are successfully logged in".tr);
               Get.snackbar("Success".tr, "you are successfully logged in".tr);
-              Get.off(HomePage());
+              Get.off(const HomePage());
               prefs.setBool('user', true);
-              print(provider.nickName.trim());
               prefs.setString('nickName', provider.nickName.trim());
               prefs.setString('pin', provider.pinNumber.trim());
               textfieldcontroller.newNickName(value: 'nick name'.tr);
             }
           } else {
-            print('#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
             await provider.userdatafetch(
                 nickNameController.text.trim(), pinController.text.trim());
 
@@ -119,13 +106,12 @@ class _LoginPageState extends State<LoginPage> {
             }
           }
         } catch (e) {
-          print(e.toString() + '&&&&&&&&&&&&&&&&');
           nickNameController.text = '';
           pinController.text = '';
           SpeechController.listen(
-              "No user Exits with nick name".tr + "${nickNameController.text}");
+              "${"No user Exits with nick name".tr}${nickNameController.text}");
           Get.snackbar("Failed".tr,
-              "No user Exits with nick name".tr + "${nickNameController.text}",
+              "${"No user Exits with nick name".tr}${nickNameController.text}",
               backgroundColor: Colors.white);
         }
       }
@@ -262,7 +248,7 @@ class _LoginPageState extends State<LoginPage> {
                         horizontal: 20, vertical: 10),
                     label: Text('Login'.tr),
                     labelStyle:
-                        TextStyle(color: ThemeColors.background, fontSize: 26),
+                        const TextStyle(color: ThemeColors.background, fontSize: 26),
                   ),
                 ),
                 const SizedBox(
@@ -272,7 +258,7 @@ class _LoginPageState extends State<LoginPage> {
                     text: TextSpan(children: [
                   TextSpan(
                       text: "Don't have an account? ".tr,
-                      style: TextStyle(color: Colors.white, fontSize: 18)),
+                      style: const TextStyle(color: Colors.white, fontSize: 18)),
                   TextSpan(
                       recognizer: TapGestureRecognizer()
                         ..onTap = () => Get.to(const SignUpPage()),

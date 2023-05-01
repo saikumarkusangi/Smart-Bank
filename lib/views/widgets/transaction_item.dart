@@ -2,14 +2,12 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:bank/constants/constants.dart';
-import 'package:bank/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'avatar_image.dart';
 
 class TransactionItem extends StatelessWidget {
-  TransactionItem(this.data, {Key? key, this.onTap}) : super(key: key);
-  final data;
+  const TransactionItem(this.data, {Key? key, this.onTap}) : super(key: key);
+  final Map data;
   final GestureTapCallback? onTap;
   
   @override
@@ -59,31 +57,29 @@ class TransactionItem extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Expanded(
-                            child: Container(
-                                child: Text(
-                                  
-                                    (!send.toString().contains("-"))
-                                        ? "${'Received from'.tr} ${data['to-from']}"
-                                        : "${'Money sent to'.tr} ${data['to-from']}",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700)))),
-                        SizedBox(width: 5),
-                        Container(
-                            child: Text('₹${data['amount']}',
+                            child: Text(
+                              
+                                (!send.toString().contains("-"))
+                                    ? "${'Received from'.tr} ${data['to-from']}"
+                                    : "${'Money sent to'.tr} ${data['to-from']}",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    color: (!send.toString().contains("-"))
-                                        ? Colors.green
-                                        : Colors.red,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600)))
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700))),
+                        const SizedBox(width: 5),
+                        Text('₹${data['amount']}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: (!send.toString().contains("-"))
+                                    ? Colors.green
+                                    : Colors.red,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600))
                       ],
                     ),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -96,38 +92,37 @@ class TransactionItem extends StatelessWidget {
                                             DateFormat('yyyy-MM-dd')
                                                 .format(today)
                                                 .toString())
-                                        ? Text('Today') : 
+                                        ? const Text('Today') : 
                                         (data['date'] ==
                                             DateFormat('yyyy-MM-dd')
                                                 .format(yesterday)
                                                 .toString())
-                                        ? Text('Yesterday') : 
+                                        ? const Text('Yesterday') : 
                                         (data['date'] ==
                                             DateFormat('yyyy-MM-dd')
                                                 .format(twodaysago)
                                                 .toString())
-                                        ? Text('2 days ago') :
+                                        ? const Text('2 days ago') :
                                             Text(
                                        data['date'],
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 16, color: Colors.black38))),
-                            Container(
-                                child: Text(data['time'],
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.black26))),
+                            Text(data['time'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: 14, color: Colors.black26)),
                           ],
                         ),
                         Container(
                             child: !send.toString().contains("-")
-                                ? Icon(
+                                ? const Icon(
                                     Icons.download_rounded,
                                     color: ThemeColors.green,
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.upload_rounded,
                                     color: ThemeColors.red,
                                   )),

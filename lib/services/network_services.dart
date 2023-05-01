@@ -1,10 +1,6 @@
 import 'dart:convert';
 
-import 'package:bank/models/user_model.dart';
 import 'package:bank/services/constants.dart';
-import 'package:bank/views/features/record/record_page.dart';
-import 'package:bank/views/widgets/user_box.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkServices {
@@ -50,7 +46,6 @@ class NetworkServices {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
         return response.body;
       }
     } catch (e) {
@@ -67,7 +62,6 @@ class NetworkServices {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
         return response.body;
       }
     } catch (e) {
@@ -91,7 +85,6 @@ class NetworkServices {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
         return response.body;
       }
     } catch (e) {

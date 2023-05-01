@@ -27,8 +27,7 @@ class LocalString extends Translations {
           "Profile": "Profile",
           "User Name": "User Name",
           "Full Name": "Full Name",
-          "Mobile": "Mobile",
-          "Upi d": "Upi Id",
+          "Upi id": "Upi Id",
           "Delete Account": "Delete Account",
           "Enter Your Pin": "Enter Your Pin",
           "Current Balance": "Current Balance",
@@ -42,10 +41,10 @@ class LocalString extends Translations {
           'going to home page': 'going to home page',
           'going to profile page': 'going to profile page',
           'your personal details are': 'your personal details are',
-          'user name': 'user name',
-          'full name': 'full name',
-          'mobile': 'mobile',
-          'upi id': 'upi id',
+        
+          'Full Name': 'full name',
+          'Mobile': 'mobile',
+          'Upi id': 'upi id',
           'update profile': 'update profile',
           'Sorry command not recognized try again':
               'Sorry command not recognized try again',
@@ -75,23 +74,28 @@ class LocalString extends Translations {
           'you have logged out': 'you have logged out',
           'updated successfully': 'updated successfully',
           'Commands Guide': 'Commands Guide',
-          'enter':'enter',
-           'To go to home page':'To go to home page : "Go to home page"',
-             'To go to profile page':'To go to profile page : "profile page"',
-             'To check balance':'To check balance : "check account balance"',
-             'To send money':'To send money : "send money"',
-              'To see history':'To see history : "show history"',
-          'Create Account':'Create Account',
-          'Next':'Next',
-          'Already have an account?':'Already have an account?',
-          'How to use':'How to use',
-          'des1':'Long press on the mic icon with red circle on the bottom of screen.',
-          'des2':'After long press you will hear an sound.After that sound say your command.',
-          'des3':'After saying your command you will hear sound again.Ater that sound effect remove long press',
-          'des4':'Ater removing finger from mic.If your command exits it will perform the action,If not Again repeat the above steps with different command'
+          'enter': 'enter',
+          'To go to home page': 'To go to home page : "Go to home page"',
+          'To go to profile page': 'To go to profile page : "profile page"',
+          'To check balance': 'To check balance : "check account balance"',
+          'To send money': 'To send money : "send money"',
+          'To see history': 'To see history : "show history"',
+          'Create Account': 'Create Account',
+          'Enter amount': 'Enter amount',
+          'Next': 'Next',
+          'Already have an account?': 'Already have an account?',
+          'How to use': 'How to use',
+          'des1':
+              'Long press on the mic icon with red circle on the bottom of screen.',
+          'des2':
+              'After long press you will hear an sound.After that sound say your command.',
+          'des3':
+              'After saying your command you will hear sound again.Ater that sound effect remove long press',
+          'des4':
+              'Ater removing finger from mic.If your command exits it will perform the action,If not Again repeat the above steps with different command'
         },
         'te_IN': {
-          'enter':'ఎంటర్',
+          'enter': 'ఎంటర్',
           'transactions': 'లావాదేవీలు',
           'Send': 'పంపండి',
           'Login': "ప్రవేశించండి",
@@ -111,9 +115,7 @@ class LocalString extends Translations {
           "Profile": "ప్రొఫైల్",
           "User Name": "వినియోగదారు పేరు",
           "Full Name": "పూర్తి పేరు",
-          "Mobile": "మొబైల్",
           "U p i Id": "U p i Id",
-          'write your pin': 'write your pin',
           "Delete Account": "ఖాతాను తొలగించండి",
           "Enter Your Pin": "మీ పిన్‌ని నమోదు చేయండి",
           "Current Balance": "ప్రస్తుత నిల్వ",
@@ -127,10 +129,10 @@ class LocalString extends Translations {
           'going to home page': 'హోమ్ పేజీకి వెళుతోంది',
           'going to profile page': "ప్రొఫైల్‌పేజీకి వెళుతోంది",
           'your personal details are': 'మీ వ్యక్తిగత వివరాలు',
-          'user name': 'వినియోగదారు పేరు',
-          'full name': 'పూర్తి పేరు',
-          'mobile': 'మొబైల్',
-          'upi id': 'యూపీఐ ఐడి',
+         
+          'Full Name': 'పూర్తి పేరు',
+          'Mobile': 'మొబైల్',
+          'Upi id': 'యూపీఐ ఐడి',
           'update profile': 'నవీకరణ',
           'Sorry command not recognized try again':
               "క్షమించండి ఆదేశం గుర్తించబడలేదు మళ్లీ ప్రయత్నించండి",
@@ -149,7 +151,8 @@ class LocalString extends Translations {
           'say your name': 'మీ పేరు చెప్పండి',
           'write your pin': 'మీ పిన్ వ్రాయండి',
           'your transaction details': 'మీ లావాదేవీ వివరాలు',
-          'login to check your balance':'మీ బ్యాలెన్స్ తనిఖీ చేయడానికి లాగిన్ చేయండి',
+          'login to check your balance':
+              'మీ బ్యాలెన్స్ తనిఖీ చేయడానికి లాగిన్ చేయండి',
           'update': 'నవీకరణ',
           'edit': 'సవరించు',
           'new': 'కొత్త',
@@ -160,14 +163,19 @@ class LocalString extends Translations {
           'you have logged out': 'మీరు లాగ్ అవుట్ చేసారు',
           'updated successfully': 'విజయవంతంగా నవీకరించబడింది',
           'Commands Guide': 'మార్గ దర్శకులు',
-          'Create Account':'ఖాతాను సృష్టించండి',
-          'Next':'తరువాత',
-          'Already have an account?':'ఖాతా కలిగి ఉన్నారా?',
-          'How to use':'ఎలా ఉపయోగించాలి',
-          'des1':'స్క్రీన్ దిగువన ఎరుపు వృత్తంతో మైక్ చిహ్నంపై ఎక్కువసేపు నొక్కండి.',
-          'des2':'ఎక్కువసేపు నొక్కిన తర్వాత మీకు శబ్దం వినబడుతుంది. ఆ ధ్వని తర్వాత మీ ఆదేశాన్ని చెప్పండి.',
-          'des3':'మీ కమాండ్‌ని చెప్పిన తర్వాత మీకు మళ్లీ సౌండ్ వినబడుతుంది. ఆ సౌండ్ ఎఫెక్ట్ తర్వాత లాంగ్ ప్రెస్‌ని తీసివేయండి.',
-          'des4':'ఆటర్ మైక్ నుండి వేలును తీసివేస్తుంది. మీ కమాండ్ నిష్క్రమిస్తే అది చర్యను అమలు చేస్తుంది, కాకపోతే మళ్లీ వేరే ఆదేశంతో పై దశలను పునరావృతం చేయండి.'
+          'Create Account': 'ఖాతాను సృష్టించండి',
+          'Next': 'తరువాత',
+          "Enter amount": 'మొత్తాన్ని నమోదు చేయండి',
+          'Already have an account?': 'ఖాతా కలిగి ఉన్నారా?',
+          'How to use': 'ఎలా ఉపయోగించాలి',
+          'des1':
+              'స్క్రీన్ దిగువన ఎరుపు వృత్తంతో మైక్ చిహ్నంపై ఎక్కువసేపు నొక్కండి.',
+          'des2':
+              'ఎక్కువసేపు నొక్కిన తర్వాత మీకు శబ్దం వినబడుతుంది. ఆ ధ్వని తర్వాత మీ ఆదేశాన్ని చెప్పండి.',
+          'des3':
+              'మీ కమాండ్‌ని చెప్పిన తర్వాత మీకు మళ్లీ సౌండ్ వినబడుతుంది. ఆ సౌండ్ ఎఫెక్ట్ తర్వాత లాంగ్ ప్రెస్‌ని తీసివేయండి.',
+          'des4':
+              'ఆటర్ మైక్ నుండి వేలును తీసివేస్తుంది. మీ కమాండ్ నిష్క్రమిస్తే అది చర్యను అమలు చేస్తుంది, కాకపోతే మళ్లీ వేరే ఆదేశంతో పై దశలను పునరావృతం చేయండి.'
         }
       };
 }

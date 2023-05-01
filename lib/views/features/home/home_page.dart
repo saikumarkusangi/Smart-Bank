@@ -1,13 +1,6 @@
-import 'dart:async';
-import 'dart:math';
 
-import 'package:badges/badges.dart' as badge;
 import 'package:bank/constants/constants.dart';
 import 'package:bank/controllers/controllers.dart';
-import 'package:bank/controllers/history_controller.dart';
-import 'package:bank/core.dart';
-import 'package:bank/models/user_model.dart';
-import 'package:bank/views/features/login/login_page.dart';
 import 'package:bank/views/features/profile/profile_page.dart';
 import 'package:bank/views/features/send/send_page.dart';
 import 'package:bank/views/widgets/mic.dart';
@@ -19,15 +12,12 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translator/translator.dart';
 
-import '../../../controllers/speech_controller.dart';
 import '../../../controllers/user_controller.dart';
-import '../../../dummyImages/dummy_data.dart';
 import '../../widgets/action_box.dart';
 import '../../widgets/avatar_image.dart';
 import '../../widgets/balance_card.dart';
 import '../../widgets/credit_card.dart';
 import '../../widgets/transaction_item.dart';
-import '../../widgets/user_box.dart';
 import '../history/history.dart';
 import '../request/request.dart';
 
@@ -44,16 +34,15 @@ class _HomePageState extends State<HomePage> {
 
 
   final translator = GoogleTranslator();
-  static bool balance = false;
   @override
   Widget build(BuildContext context) {
     @override
     final userDataProvider = Provider.of<UserController>(context);
     // check();
-    return SafeArea(
-      child: Stack(
-        children: [
-          Scaffold(
+    return Stack(
+      children: [
+        SafeArea(
+          child: Scaffold(
               floatingActionButton: const Mic(),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked,
@@ -146,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                         }
                         
                              },
-                              child: const Icon(Icons.language))
+                              child: const Icon(Icons.translate))
                           // child: badge(
                           //   padding: const EdgeInsets.all(3),
                           //   position: badge.BadgePosition.topEnd(top: -5, end: 2),
@@ -159,8 +148,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               body: getBody()),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -171,7 +160,7 @@ class _HomePageState extends State<HomePage> {
         onRefresh: () async {
           await value.transactions(nickName: userDataProvider.nickName.trim());
         },
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Stack(
@@ -205,10 +194,10 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               "Transactions".tr,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 17, fontWeight: FontWeight.w600),
                             ),
-                            Icon(Icons.expand_more_rounded),
+                            const Icon(Icons.expand_more_rounded),
                           ],
                         )),
                     const SizedBox(
@@ -236,7 +225,7 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 'See More'.tr,
                                 style:
-                                    TextStyle(color: Colors.red, fontSize: 18),
+                                    const TextStyle(color: Colors.red, fontSize: 18),
                               ),
                             ),
                           )
@@ -305,7 +294,6 @@ class _HomePageState extends State<HomePage> {
         Expanded(
             child: InkWell(
           onTap: () {
-            final command = Provider.of<MicController>(context, listen: false);
 
             showModalBottomSheet<void>(
                 context: context,
@@ -324,7 +312,7 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               "Enter Your Pin".tr,
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 28),
+                                  const TextStyle(color: Colors.white, fontSize: 28),
                             ),
                             const SizedBox(
                               height: 10,
@@ -380,10 +368,8 @@ class _HomePageState extends State<HomePage> {
                                     amount.showBalance(false);
                                     Navigator.pop(context);
                                   } else {
-                                    print("${amount.currentBalance} sa");
                                     SpeechController.listen(
-                                        "your account balance is ruppess".tr +
-                                            "${amount.currentBalance}");
+                                        "${"your account balance is ruppess".tr}${amount.currentBalance}");
 
                                     amount.showBalance(true);
                                     Navigator.pop(context);
@@ -397,10 +383,10 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: Chip(
                                 backgroundColor: Colors.white,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 10),
                                 label: Text('Login'.tr),
-                                labelStyle: TextStyle(
+                                labelStyle: const TextStyle(
                                     color: ThemeColors.background,
                                     fontSize: 26),
                               ),

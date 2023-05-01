@@ -2,27 +2,25 @@ import 'package:bank/constants/constants.dart';
 import 'package:bank/controllers/user_controller.dart';
 import 'package:bank/core.dart';
 import 'package:bank/views/features/home/home_page.dart';
-import 'package:bank/views/features/record/record_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/speech_controller.dart';
 import '../../widgets/widgets.dart';
-import '../home/home.dart';
 
 class PinSetUp extends StatefulWidget {
-  PinSetUp(
+  const PinSetUp(
       {Key? key,
       required this.fullName,
       required this.mobileNumber,
       required this.nickNmae,
       required this.userName})
       : super(key: key);
-  String nickNmae;
-  String userName;
-  String fullName;
-  String mobileNumber;
+ final String userName;
+ final String nickNmae;
+ final String fullName;
+ final String mobileNumber;
 
   @override
   State<PinSetUp> createState() => _PinSetUpState();
@@ -35,10 +33,9 @@ class _PinSetUpState extends State<PinSetUp> {
   final formKey = GlobalKey<FormState>();
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     pin.dispose();
     upiId.dispose();
+    super.dispose();
   }
 
   @override
@@ -200,7 +197,7 @@ class _PinSetUpState extends State<PinSetUp> {
                                     snackPosition: SnackPosition.TOP);
                                 await provider.userdatafetch(
                                     widget.nickNmae, pin.text.trim());
-                                     Get.to( HomePage());
+                                     Get.to( const HomePage());
                               } else {
                                 SpeechController.listen(res
                                     .split(':')[2]
@@ -222,10 +219,10 @@ class _PinSetUpState extends State<PinSetUp> {
                           },
                           child:  Chip(
                             backgroundColor: Colors.white,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             label: Text('Create Account'.tr),
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                                 color: ThemeColors.background, fontSize: 26),
                           ),
                         ),

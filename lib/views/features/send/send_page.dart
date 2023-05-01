@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:bank/constants/constants.dart';
 import 'package:bank/controllers/speech_controller.dart';
 import 'package:bank/controllers/user_controller.dart';
-import 'package:bank/views/features/home/home.dart';
 import 'package:bank/views/features/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../controllers/textFieldController/textfield_controller.dart.dart';
 import '../../widgets/widgets.dart';
+import 'pin_page.dart';
 
 class SendPage extends StatefulWidget {
   const SendPage({super.key});
@@ -23,10 +21,9 @@ class _SendPageState extends State<SendPage> {
   @override
   void dispose() {
     final textfieldcontroller = Provider.of<TextFieldController>(context);
-    // TODO: implement dispose
-    super.dispose();
     textfieldcontroller.newAmmount(value: '');
     textfieldcontroller.newrecevierName(value: '');
+    super.dispose();
   }
 
   final _ammount = TextEditingController();
@@ -66,71 +63,71 @@ class _SendPageState extends State<SendPage> {
                   child: CircularProgressIndicator(),
                 )
               : SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                          height: 130,
-                          child: Column(children: [
-                            (to.text.isNotEmpty)
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      // AvatarImage(Images.avatars[Random().nextInt(4)],isSVG: true,),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.8,
-                                        child: Center(
-                                          child: Text(
-                                            "sending money to ${to.text}",
-                                            style: const TextStyle(
-                                                overflow: TextOverflow.ellipsis,
-                                                color: Colors.black,
-                                                fontSize: 18),
-                                            maxLines: 1,
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                            height: 130,
+                            child: Column(children: [
+                              (to.text.isNotEmpty)
+                                  ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        // AvatarImage(Images.avatars[Random().nextInt(4)],isSVG: true,),
+                                        SizedBox(
+                                          width:
+                                              MediaQuery.of(context).size.width *
+                                                  0.8,
+                                          child: Center(
+                                            child: Text(
+                                              "sending money to ${to.text}",
+                                              style: const TextStyle(
+                                                  overflow: TextOverflow.ellipsis,
+                                                  color: Colors.black,
+                                                  fontSize: 18),
+                                              maxLines: 1,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox(
-                                    width: 0,
-                                  ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            TextFormField(
-                              controller: to,
-                              keyboardType: TextInputType.text,
-                              style: const TextStyle(fontSize: 20),
-                              //autofocus: true,
-                              decoration: InputDecoration(
-                                  hintStyle: const TextStyle(fontSize: 18),
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  hintText: 'enter recevier name'.tr,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              onFieldSubmitted: (value) =>
-                                  FocusScope.of(context)
-                                      .requestFocus(focusNode),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'enter recevier name'.tr;
-                                }
-                                return null;
-                              },
-                            ),
-                          ])),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.2),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 2.2,
-                          child: Form(
-                            key: formKey,
+                                      ],
+                                    )
+                                  : const SizedBox(
+                                      width: 0,
+                                    ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              TextFormField(
+                                controller: to,
+                                keyboardType: TextInputType.text,
+                                style: const TextStyle(fontSize: 20),
+                                //autofocus: true,
+                                decoration: InputDecoration(
+                                    hintStyle: const TextStyle(fontSize: 18),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    hintText: 'enter recevier name'.tr,
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10))),
+                                onFieldSubmitted: (value) =>
+                                    FocusScope.of(context)
+                                        .requestFocus(focusNode),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'enter recevier name'.tr;
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ])),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.2),
+                          child: SizedBox(
+                            height: MediaQuery.of(context).size.height / 2.2,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -174,76 +171,27 @@ class _SendPageState extends State<SendPage> {
                             ),
                           ),
                         ),
-                      ),
-                      MaterialButton(
-                        onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            String response = await provider.send(
-                                from: provider.nickName,
-                                to: to.text.trim(),
-                                ammount: int.parse(_ammount.text));
-
-                            if (response
-                                    .split(':')[1]
-                                    .replaceAll(RegExp("'"), '')
-                                    .substring(
-                                        0,
-                                        response
-                                                .toString()
-                                                .split(':')[1]
-                                                .replaceAll(RegExp("'"), '')
-                                                .length -
-                                            1)
-                                    .trim() ==
-                                'success') {
-                              SpeechController.listen(
-                                  "Money successfully sent to ${to.text}");
-                              Get.snackbar('Success',
-                                  "Money successfully sent to ${to.text}",
-                                  snackPosition: SnackPosition.TOP);
-                                   provider.currentBalance = '';
-                                provider.history.clear();
-                              await provider
-                                  .userdatafetch(provider.nickName.trim(),
-                                      provider.pinNumber.trim())
-                                  .whenComplete(() {
-                                 
-                                Get.to(HomePage());
-                              });
+                        MaterialButton(
+                          onPressed: () {
+                            formKey.currentState!.validate();
+                            if (_ammount.text.isNotEmpty && to.text.isNotEmpty) {
+                              Get.to(PinPage(
+                                ammount: _ammount,
+                                to: to,
+                              ));
                             }
-                            print(response);
-                            if (response
-                                    .split(':')[2]
-                                    .replaceAll(RegExp("'"), '') ==
-                                " invalid json message format or no message}") {
-                              SpeechController.listen(
-                                  "no user found with name ${to.text}");
-                              Get.snackbar('Something went wrong',
-                                  "no user found with name ${to.text}",
-                                  snackPosition: SnackPosition.TOP);
-                            }
-
-                            if (response
-                                    .split(':')[2]
-                                    .replaceAll(RegExp("'"), '') ==
-                                " maximum transaction amount limit is 100 rupees}") {
-                              SpeechController.listen(
-                                  "maximum transaction amount limit is 100 rupees");
-                              Get.snackbar('Something went wrong',
-                                  "maximum transaction amount limit is 100 rupees",
-                                  snackPosition: SnackPosition.TOP);
-                            }
-                          }
-                        },
-                        color: ThemeColors.green,
-                        child: Text(
-                          'Send'.tr,
-                          style: TextStyle(color: Colors.black, fontSize: 28),
-                        ),
-                        minWidth: MediaQuery.of(context).size.width * 0.8,
-                        height: 50,
-                      )
-                    ],
+                          },
+                          color: ThemeColors.green,
+                          minWidth: MediaQuery.of(context).size.width * 0.8,
+                          height: 50,
+                          child: Text(
+                            'Send'.tr,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 28),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
         ),

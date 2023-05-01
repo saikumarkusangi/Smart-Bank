@@ -1,28 +1,18 @@
-import 'dart:io';
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:bank/controllers/controllers.dart';
-import 'package:bank/controllers/history_controller.dart';
 import 'package:bank/controllers/textFieldController/textfield_controller.dart.dart';
 import 'package:bank/controllers/mic_controller.dart';
 import 'package:bank/controllers/user_controller.dart';
-import 'package:bank/services/network_services.dart';
 import 'package:bank/views/features/languagePage/language.dart';
-import 'package:bank/views/features/home/home.dart';
-import 'package:bank/views/features/login/login_page.dart';
 import 'package:bank/views/features/profile/profile_page.dart';
 import 'package:bank/views/features/send/send_page.dart';
 import 'package:bank/views/splash_screen.dart';
 import 'package:bank/views/views.dart';
-import 'package:bank/views/widgets/demo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'package:translator/translator.dart';
 import 'localStrings/localStrings.dart.dart';
 import 'onBoarding/onboarding_page.dart';
-import 'views/widgets/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -70,11 +60,9 @@ class _MyAppState extends State<MyApp> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     nickName = prefs.getString('nickName') ?? '';
     pin = prefs.getString('pin') ?? '';
-    if (nickName != null && pin != null) {
-      setState(() {
-        isLoggedIn = true;
-      });
-    }
+    setState(() {
+      isLoggedIn = true;
+    });
   }
 
 
@@ -116,11 +104,11 @@ class _MyAppState extends State<MyApp> {
               ),
               GetPage(
                 name: '/homePage',
-                page: () => HomePage(),
+                page: () => const HomePage(),
               ),
               GetPage(
                 name: '/profilePage',
-                page: () => ProfilePage(),
+                page: () => const ProfilePage(),
               ),
               GetPage(
                 name: '/sendPage',
@@ -136,7 +124,7 @@ class _MyAppState extends State<MyApp> {
               ),
               GetPage(
                 name: '/setPinPage',
-                page: () => PinSetUp(
+                page: () => const PinSetUp(
                   fullName: '',
                   mobileNumber: '',
                   nickNmae: '',
@@ -148,7 +136,7 @@ class _MyAppState extends State<MyApp> {
                 page: () => const RecordPage(),
               ),
             ],
-            home: OnBoardingPage()));
+            home: SplashScreen(user: user,)));
   }
 }
 

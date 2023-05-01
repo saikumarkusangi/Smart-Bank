@@ -1,10 +1,8 @@
-import 'package:bank/views/features/languagePage/language.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,15 +46,6 @@ class OnBoardingPageState extends State<OnBoardingPage> {
     Get.off(const LoginPage());
   }
 
-  Widget _buildFullscreenImage() {
-    return Image.asset(
-      'assets/images/1.jpeg',
-      fit: BoxFit.cover,
-      height: double.infinity,
-      width: double.infinity,
-      alignment: Alignment.center,
-    );
-  }
 
   Widget _buildImage(String assetName, [double width = 350]) {
     return Image.asset(assetName, width: width);
@@ -83,8 +72,8 @@ class OnBoardingPageState extends State<OnBoardingPage> {
         autoScrollDuration: 0,
         pages: [
           PageViewModel(
-            titleWidget: Column(
-              children: const [
+            titleWidget: const Column(
+              children: [
                 Text(
                   "Select your langauge",
                   style: TextStyle(fontSize: 24),
@@ -157,7 +146,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
                         horizontal: 20, vertical: 10),
                     label: const Text('తెలుగు'),
                     labelStyle:
-                        TextStyle(color: ThemeColors.secondary, fontSize: 26),
+                        const TextStyle(color: ThemeColors.secondary, fontSize: 26),
                   ),
                 ),
               ],
@@ -168,70 +157,68 @@ class OnBoardingPageState extends State<OnBoardingPage> {
           PageViewModel(
           //  useScrollView: true,
             title: "How to use".tr,
-            bodyWidget: Expanded(
-              child: Column(
-                children: [
-                  RichText(text: 
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Step 1 :',
-                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
-                      ),
-                      TextSpan(
-                         text:'des1'.tr,style: TextStyle(fontSize: 22,color: Colors.black),
-                      )
-                    ],
-                    
-                  )),
-                  SizedBox(height: 20,),
+            bodyWidget: Column(
+              children: [
+                RichText(text: 
+                TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'Step 1 :',
+                  style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
+                    ),
+                    TextSpan(
+                       text:'des1'.tr,style: const TextStyle(fontSize: 22,color: Colors.black),
+                    )
+                  ],
                   
-                 RichText(text: 
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Step 2 :',
-                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
-                      ),
-                      TextSpan(
-                         text:'des2'.tr,style: TextStyle(fontSize: 22,color: Colors.black),
-                      )
-                    ],
-                    
-                  )),
-                    SizedBox(height: 20,),
+                )),
+                const SizedBox(height: 20,),
+                
+               RichText(text: 
+                TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'Step 2 :',
+                  style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
+                    ),
+                    TextSpan(
+                       text:'des2'.tr,style: const TextStyle(fontSize: 22,color: Colors.black),
+                    )
+                  ],
                   
-                 RichText(text: 
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Step 3 :',
-                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
-                      ),
-                      TextSpan(
-                         text:'des3'.tr,style: TextStyle(fontSize: 22,color: Colors.black),
-                      )
-                    ],
-                    
-                  )),
+                )),
+                  const SizedBox(height: 20,),
+                
+               RichText(text: 
+                TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'Step 3 :',
+                  style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
+                    ),
+                    TextSpan(
+                       text:'des3'.tr,style: const TextStyle(fontSize: 22,color: Colors.black),
+                    )
+                  ],
+                  
+                )),
 
-                   SizedBox(height: 20,),
+                 const SizedBox(height: 20,),
+                
+               RichText(text: 
+                TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'Step 4 :',
+                  style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
+                    ),
+                    TextSpan(
+                       text:'des4'.tr,style: const TextStyle(fontSize: 22,color: Colors.black),
+                    )
+                  ],
                   
-                 RichText(text: 
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Step 4 :',
-                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
-                      ),
-                      TextSpan(
-                         text:'des4'.tr,style: TextStyle(fontSize: 22,color: Colors.black),
-                      )
-                    ],
-                    
-                  )),
-                ],
-              ),
+                )),
+              ],
             ),
             image: _buildImage('assets/images/1.jpeg'),
             decoration: pageDecoration.copyWith(
@@ -242,21 +229,19 @@ class OnBoardingPageState extends State<OnBoardingPage> {
           ),
           PageViewModel(
             title: "Commands Guide".tr,
-            bodyWidget: Expanded(
-              child: Column(
-               
-                children:  [
-                    Text('To go to home page'.tr,style: TextStyle(fontSize: 22),),
-                    SizedBox(height: 20,),
-                     Text('To go to profile page'.tr,style: TextStyle(fontSize: 22),),
-                    SizedBox(height: 20,),
-                     Text('To check balance'.tr,style: TextStyle(fontSize: 22),),
-                       SizedBox(height: 20,),
-                     Text('To see histoy'.tr,style: TextStyle(fontSize: 22),),
-                       SizedBox(height: 20,),
-                     Text('To send money'.tr,style: TextStyle(fontSize: 22),)
-                ],
-              ),
+            bodyWidget: Column(
+             
+              children:  [
+                  Text('To go to home page'.tr,style: const TextStyle(fontSize: 22),),
+                  const SizedBox(height: 20,),
+                   Text('To go to profile page'.tr,style: const TextStyle(fontSize: 22),),
+                  const SizedBox(height: 20,),
+                   Text('To check balance'.tr,style: const TextStyle(fontSize: 22),),
+                     const SizedBox(height: 20,),
+                   Text('To see histoy'.tr,style: const TextStyle(fontSize: 22),),
+                     const SizedBox(height: 20,),
+                   Text('To send money'.tr,style: const TextStyle(fontSize: 22),)
+              ],
             ),
             decoration: pageDecoration.copyWith(
               bodyFlex: 6,

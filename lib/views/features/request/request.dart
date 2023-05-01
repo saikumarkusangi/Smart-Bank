@@ -1,6 +1,5 @@
 import 'package:bank/constants/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../widgets/widgets.dart';
 
@@ -30,7 +29,7 @@ class _RequestPageState extends State<RequestPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
               child: Column(
@@ -38,15 +37,15 @@ class _RequestPageState extends State<RequestPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 
-                SizedBox(
+                const SizedBox(
                   
                   height: 100,
                   child: Column(
                     children: [
-                      const  Text('Request money to',style: TextStyle(color: ThemeColors.primary,fontSize: 28,fontWeight: FontWeight.bold),),
+                      Text('Request money to',style: TextStyle(color: ThemeColors.primary,fontSize: 28,fontWeight: FontWeight.bold),),
                      Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children:const [
+                    children:[
                       
                       Text('',style: TextStyle(
                         color: Colors.black,
@@ -66,7 +65,7 @@ class _RequestPageState extends State<RequestPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(height: 40,),
+                            const SizedBox(height: 40,),
                             TextFormField(
                              
                              autofocus: true,
@@ -95,9 +94,9 @@ class _RequestPageState extends State<RequestPage> {
                     
                     },
                     color: ThemeColors.yellow,
-                                 child:Text('Request',style: TextStyle(color: Colors.black,fontSize: 28),),
                     minWidth: MediaQuery.of(context).size.width * 0.8,
                     height: 50,
+                                 child:const Text('Request',style: TextStyle(color: Colors.black,fontSize: 28),),
                     )
               ],
                   ),

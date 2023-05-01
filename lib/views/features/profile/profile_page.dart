@@ -21,21 +21,19 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  @override
   Future<void> speechDetails() async {
     final provider = Provider.of<UserController>(context);
     await SpeechController.listen("your personal details are".tr);
-    await SpeechController.listen("Nick Name ${provider.nickName}");
+    await SpeechController.listen("${"nick name".tr} ${provider.nickName}");
     await SpeechController.listen("User Name ${provider.userName}");
     await SpeechController.listen("Full Name ${provider.fullName}");
-    await SpeechController.listen("Mobile Number ${provider.phoneNumber}");
+    await SpeechController.listen("Mobile ${provider.phoneNumber}");
     await SpeechController.listen("Upi id ${provider.upiId}");
   }
 
   @override
   Widget build(BuildContext context) {
     if (Get.currentRoute == '/ProfilePage') {
-      print('tsssssss');
       speechDetails();
     }
     final provider = Provider.of<UserController>(context);
@@ -48,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
         toolbarHeight: 60,
         title: Text(
           'profile'.tr,
-          style: TextStyle(fontSize: 28),
+          style: const TextStyle(fontSize: 28),
         ),
       ),
       body: SafeArea(
@@ -121,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         subtitle: Text(
                           provider.userName,
-                          style: TextStyle(fontSize: 24),
+                          style: const TextStyle(fontSize: 24),
                         ),
                       ),
                     ),
@@ -147,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         subtitle: Text(
                           provider.fullName,
-                          style: TextStyle(fontSize: 24),
+                          style: const TextStyle(fontSize: 24),
                         ),
                       ),
                     ),
@@ -166,14 +164,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             )),
                         title: Text(
                           "mobile".tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.w700,
                               decoration: TextDecoration.underline),
                         ),
                         subtitle: Text(
                           provider.phoneNumber,
-                          style: TextStyle(fontSize: 24),
+                          style: const TextStyle(fontSize: 24),
                         ),
                       ),
                     ),
@@ -192,14 +190,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             )),
                         title: Text(
                           "upi id".tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.w700,
                               decoration: TextDecoration.underline),
                         ),
                         subtitle: Text(
                           provider.upiId,
-                          style: TextStyle(fontSize: 24),
+                          style: const TextStyle(fontSize: 24),
                         ),
                       ),
                     ),
@@ -208,19 +206,19 @@ class _ProfilePageState extends State<ProfilePage> {
                         try {
                           final res = await NetworkServices.deleteUser(
                               provider.nickName.trim());
-                          //   Get.snackbar(res., message)
-                          // SpeechController.flutterTts.stop();
-                          //  Get.to(LoginPage());
+                          Get.snackbar(res, 'Account deleted successfull');
+                          SpeechController.flutterTts.stop();
+                          Get.to(const LoginPage());
                         } catch (e) {
                           rethrow;
                         }
                       },
                       child: Chip(
                         backgroundColor: Colors.blue,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
                         label: Text('Delete Account'.tr),
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                             color: ThemeColors.secondary, fontSize: 26),
                       ),
                     ),
@@ -235,9 +233,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           provider.clearData();
                           prefs.setString('nickName', '');
                           prefs.setString('pin', '');
-                          prefs.setBool('user',false);
+                          prefs.setBool('user', false);
                           Get.off(const LoginPage());
-                          print(provider.fullName);
+                  
                         } catch (e) {
                           rethrow;
                         }
@@ -263,7 +261,7 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 Future<void> _displayTextInputDialog(
-    BuildContext context, title, key, nickname, pin) async {
+     context, title, key, nickname, pin) async {
   final provider = Provider.of<UserController>(context, listen: false);
   final textFieldController = TextEditingController();
 

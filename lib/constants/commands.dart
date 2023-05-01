@@ -47,6 +47,7 @@ class Commands {
     'register',
     'registration',
     'new registration',
+   
   ];
 
   static final homePageCommand = [

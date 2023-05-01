@@ -6,12 +6,12 @@ class TextFieldController extends ChangeNotifier {
   String nickname = '';
   String receviername = '';
   String ammount = '';
-  String Nick = '';
+  String nick = '';
   String user = '';
   String full = '';
   String upi = '';
   String mobile = '';
-  LoginTextField() {
+  loginTextField() {
     newNickName(value: 'nick name'.tr);
   }
 
@@ -31,7 +31,7 @@ class TextFieldController extends ChangeNotifier {
   }
 
   Future<void> newNick({required String value}) async {
-    Nick = value;
+    nick = value;
     notifyListeners();
   }
 

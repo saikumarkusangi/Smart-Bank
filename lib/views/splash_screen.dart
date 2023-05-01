@@ -14,7 +14,7 @@ import '../controllers/user_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   final bool user;
-  SplashScreen(this.user);
+  const SplashScreen( {super.key, required this.user});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -32,26 +32,23 @@ class _SplashScreenState extends State<SplashScreen> {
     final userDataProvider =
         Provider.of<UserController>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('user exits ----->' + prefs.getString('nickName')!);
-    print('pin exits ----->' + prefs.getString('pin')!);
     await userDataProvider.userdatafetch(
         prefs.getString('nickName'), prefs.getString('pin'));
   }
 
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _seen = (prefs.getBool('seen') ?? false);
+    bool seen = (prefs.getBool('seen') ?? false);
 
-    if (_seen) {
+    if (seen) {
       startSplashScreen();
     } else {
       await prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new OnBoardingPage()));
+           MaterialPageRoute(builder: (context) => const OnBoardingPage()));
     }
   }
 
-  @override
   void afterFirstLayout(BuildContext context) => checkFirstSeen();
 
   startSplashScreen() async {
@@ -59,9 +56,9 @@ class _SplashScreenState extends State<SplashScreen> {
     var duration = const Duration(seconds: 3);
     return Timer(duration, () {
       if (prefs.getBool('user') == true) {
-        Get.off(HomePage());
+        Get.off(const HomePage());
       } else {
-        Get.off(LoginPage());
+        Get.off(const LoginPage());
       }
     });
   }

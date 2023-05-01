@@ -16,16 +16,16 @@ class ActionBox extends StatelessWidget {
       Container(
         // width: double.infinity,
         height: 130,
-        padding: EdgeInsets.only(top: 20, bottom: 20, left: 5, right: 5),
+        padding: const EdgeInsets.only(top: 20, bottom: 20, left: 5, right: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: this.bgColor,
+          color: bgColor,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.1),
               spreadRadius: 1,
               blurRadius: 1,
-              offset: Offset(1, 1), // changes position of shadow
+              offset: const Offset(1, 1), // changes position of shadow
             ),
           ],
         ),
@@ -34,13 +34,13 @@ class ActionBox extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: ThemeColors.secondary
               ),
               child: Icon(icon, size: 28, color: color,)
             ),
-            SizedBox(height: 13),
+            const SizedBox(height: 13),
             Text(title, style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w600),)
           ],
         ) 

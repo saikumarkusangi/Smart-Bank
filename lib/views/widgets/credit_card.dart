@@ -23,7 +23,7 @@ class CreditCard extends StatelessWidget {
             child: SizedBox(
                 child: Text(
               userDataProvider.upiId,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
@@ -45,7 +45,7 @@ class CreditCard extends StatelessWidget {
             child: SizedBox(
                 child: Text(
               userDataProvider.fullName,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),

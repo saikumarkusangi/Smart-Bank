@@ -6,7 +6,7 @@ import 'package:multiavatar/multiavatar.dart';
 import '../../constants/constants.dart';
 
 class AvatarImage extends StatelessWidget {
-  const AvatarImage(this.name, {this.width = 100, this.height = 100, this.bgColor, this.borderWidth = 0, this.borderColor, this.trBackground = false, this.isSVG = true, this.radius = 50});
+  const AvatarImage(this.name, {super.key, this.width = 100, this.height = 100, this.bgColor, this.borderWidth = 0, this.borderColor, this.trBackground = false, this.isSVG = true, this.radius = 50});
   final String name;
   final double width;
   final double height;
@@ -39,7 +39,7 @@ class AvatarImage extends StatelessWidget {
               color: ThemeColors.shadowColor.withOpacity(0.1),
               spreadRadius: 1,
               blurRadius: 1,
-              offset: Offset(1, 1), // changes position of shadow
+              offset: const Offset(1, 1), // changes position of shadow
             ),
           ],
           image: DecorationImage(image: NetworkImage(name), fit: BoxFit.cover),

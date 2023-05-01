@@ -1,15 +1,7 @@
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:bank/constants/constants.dart';
-import 'package:bank/views/features/pinsetup/pin_set_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinput/pinput.dart';
-import 'package:provider/provider.dart';
-import '../../../controllers/controllers.dart';
-import '../../../controllers/mic_controller.dart';
-import '../../../controllers/textFieldController/textfield_controller.dart.dart';
-import '../../../main.dart';
 import '../../views.dart';
 import '../../widgets/widgets.dart';
 
@@ -37,40 +29,13 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final textfieldcontroller = Provider.of<TextFieldController>(context);
 
     // userName.text = textfieldcontroller.user;
     // fullName.text = textfieldcontroller.full;
     // mobileNumber.text = textfieldcontroller.mobile;
     // nickName.text = textfieldcontroller.Nick;
     final keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
-    print(Get.currentRoute);
-    final micProvider = Provider.of<MicController>(context);
 
-    const focusedBorderColor = Colors.white;
-    const fillColor = Colors.white;
-    const borderColor = Colors.blue;
-    final defaultPinTheme = PinTheme(
-      width: 56,
-      height: 56,
-      textStyle: const TextStyle(
-        fontSize: 32,
-        color: Colors.black,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(19),
-        border: Border.all(color: borderColor),
-      ),
-    );
-    final DisableTheme = PinTheme(
-      width: 56,
-      height: 56,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(19),
-        border: Border.all(color: borderColor),
-      ),
-    );
     return SafeArea(
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -88,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 Text(
                   'Create Account'.tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w800,
                       fontSize: 32),
@@ -213,10 +178,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           },
                           child: Chip(
                             backgroundColor: Colors.white,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             label: Text('Next'.tr),
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                                 color: ThemeColors.background, fontSize: 26),
                           ),
                         ),
@@ -228,10 +193,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           TextSpan(
                               text: "Already have an account?".tr,
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 18)),
+                                  const TextStyle(color: Colors.white, fontSize: 18)),
                           TextSpan(
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () => Get.to(LoginPage()),
+                                ..onTap = () => Get.to(const LoginPage()),
                               text: 'Login'.tr,
                               style: const TextStyle(
                                   color: Colors.white,

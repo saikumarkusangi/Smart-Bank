@@ -3,8 +3,6 @@ import 'package:bank/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
-import 'package:translator/translator.dart';
 import '../../views.dart';
 import '../../widgets/widgets.dart';
 
@@ -16,7 +14,6 @@ class LanguagePage extends StatefulWidget {
 }
 
 class _LanguagePageState extends State<LanguagePage> {
-  @override
   permission() async {
     var status = await Permission.microphone.status;
     if (status.isDenied) {

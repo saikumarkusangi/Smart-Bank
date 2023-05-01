@@ -6,14 +6,12 @@ import 'package:bank/views/features/history/history.dart';
 import 'package:bank/views/features/profile/profile_page.dart';
 import 'package:bank/views/features/send/send_page.dart';
 import 'package:bank/views/views.dart';
-import 'package:bank/views/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/constants.dart';
 import '../views/features/balance/balance.dart';
-import '../views/features/home/home.dart';
 
 class MicController extends ChangeNotifier {
   final List _text = [];
@@ -34,12 +32,11 @@ class MicController extends ChangeNotifier {
     notifyListeners();
   }
 
-  listen(BuildContext context) async {
+  listen( context) async {
     // _isListening = true;
     // notifyListeners();
 
     for (var e in _text) {
-      print('checking for ${e} working on it');
       if (Commands.checkBalanceCommand.contains(e)) {
         if (Get.currentRoute == '/ProfilePage' ||
             Get.currentRoute == '/HomePage' ||
@@ -50,7 +47,7 @@ class MicController extends ChangeNotifier {
           _text.clear();
           _isListening = false;
           notifyListeners();
-          Get.to(Balance());
+          Get.to(const Balance());
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -79,7 +76,7 @@ class MicController extends ChangeNotifier {
           _text.clear();
           _isListening = false;
           notifyListeners();
-          Get.to(Balance());
+          Get.to(const Balance());
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -108,7 +105,7 @@ class MicController extends ChangeNotifier {
           _text.clear();
           _isListening = false;
           notifyListeners();
-          Get.to(Balance());
+          Get.to(const Balance());
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -265,13 +262,10 @@ class MicController extends ChangeNotifier {
       if (Get.currentRoute == '/LoginPage') {
         final textfieldController =
             Provider.of<TextFieldController>(context, listen: false);
-        print('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE' + e);
         textfieldController.newNickName(value: e);
       }
 
       if (Get.currentRoute == '/SignUpPage') {
-        print('yessss');
-        print(e);
         final textfieldController =
             Provider.of<TextFieldController>(context, listen: false);
         if (e.toString().contains('nick name') ||
@@ -295,10 +289,8 @@ class MicController extends ChangeNotifier {
         }
       }
       if (Get.currentRoute == '/SendPage') {
-        final provider = Provider.of<UserController>(context, listen: false);
         final textfieldController =
             Provider.of<TextFieldController>(context, listen: false);
-        print(e);
         if (e.toString().contains('send') &&
                 e.toString().contains('to') &&
                 e.toString().contains('rs') ||
@@ -356,7 +348,6 @@ class MicController extends ChangeNotifier {
       }
 
       if (Commands.logoutCommand.contains(e)) {
-        final provider = Provider.of<UserController>(context);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         if (Get.currentRoute == '/SendPage' ||
             Get.currentRoute == '/HomePage' ||

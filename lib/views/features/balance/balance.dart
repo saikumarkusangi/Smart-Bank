@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../constants/colors.dart';
-import '../../../controllers/speech_controller.dart';
 import '../../../controllers/user_controller.dart';
 import '../../widgets/mic.dart';
 
@@ -18,23 +15,23 @@ class Balance extends StatefulWidget {
 }
 
 class _BalanceState extends State<Balance> {
-  check() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getBool('user'));
-  }
+  // check() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  // }
 
   final pinController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final pinProvider = Provider.of<UserController>(context);
-    check();
+    // check();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: ThemeColors.pink,
-        title: Text(
+        title:const Text(
           'Check Account Balance',
           style: TextStyle(color: Colors.black),
         ),
@@ -49,7 +46,7 @@ class _BalanceState extends State<Balance> {
             children: [
               Text(
                 "Enter Your Pin".tr,
-                style: TextStyle(color: Colors.black, fontSize: 28),
+                style: const TextStyle(color: Colors.black, fontSize: 28),
               ),
               const SizedBox(
                 height: 10,
@@ -104,10 +101,8 @@ class _BalanceState extends State<Balance> {
                       amount.showBalance(false);
                       Navigator.pop(context);
                     } else {
-                      print("${amount.currentBalance} sa");
                       SpeechController.listen(
-                          "your account balance is ruppess".tr +
-                              "${amount.currentBalance}");
+                          "${"your account balance is ruppess".tr}${amount.currentBalance}");
 
                       amount.showBalance(true);
                       Navigator.pop(context);
@@ -120,10 +115,10 @@ class _BalanceState extends State<Balance> {
                 },
                 child: Chip(
                   backgroundColor: Colors.black,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding:const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   label: Text('Login'.tr),
                   labelStyle:
-                      TextStyle(color: ThemeColors.secondary, fontSize: 26),
+                     const TextStyle(color: ThemeColors.secondary, fontSize: 26),
                 ),
               ),
             ],

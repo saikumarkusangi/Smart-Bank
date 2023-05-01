@@ -1,5 +1,4 @@
 import 'package:bank/constants/constants.dart';
-import 'package:bank/controllers/history_controller.dart';
 import 'package:bank/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
