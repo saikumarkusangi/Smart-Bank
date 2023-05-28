@@ -1,10 +1,10 @@
-import 'package:bank/constants/constants.dart';
-import 'package:bank/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../../services/services.dart';
+import '../../../utils/utils.dart';
 import '../../views.dart';
-import '../../widgets/widgets.dart';
 
 class LanguagePage extends StatefulWidget {
   const LanguagePage({Key? key}) : super(key: key);
@@ -25,8 +25,8 @@ class _LanguagePageState extends State<LanguagePage> {
   }
 
   voice() async {
-    await SpeechController.listen("please Select your langauge");
-    await SpeechController.listen("దయచేసి మీ భాషను ఎంచుకోండి");
+    await TtsApi.api("please Select your langauge");
+    await TtsApi.api("దయచేసి మీ భాషను ఎంచుకోండి");
   }
 
   @override
@@ -38,12 +38,8 @@ class _LanguagePageState extends State<LanguagePage> {
 
   @override
   Widget build(BuildContext context) {
-   
- 
-  
- 
     return Scaffold(
-      backgroundColor: ThemeColors.background,
+      backgroundColor: AppColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -53,11 +49,13 @@ class _LanguagePageState extends State<LanguagePage> {
               Center(
                 child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
-                    child: Image.asset(Images.loginbanner)),
+                    child: Image.asset(logo)),
               ),
-              const SizedBox(height: 50,),
+              const SizedBox(
+                height: 50,
+              ),
               const Text(
-                'Select your langauge',
+                'Select your langauge ',
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
@@ -68,17 +66,16 @@ class _LanguagePageState extends State<LanguagePage> {
               ),
               InkWell(
                 onTap: () {
-                  var english = const Locale('en', 'US');
+                  var english = const Locale('en', 'IN');
                   Get.updateLocale(english);
-                  SpeechController.listen('selected language'.tr);
-                  Get.off(const LoginPage());
+                  TtsApi.api('selected language'.tr);
+                  Get.off(LoginPage());
                 },
                 child: const Chip(
                   backgroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   label: Text('English'),
-                  labelStyle:
-                      TextStyle(color: ThemeColors.background, fontSize: 26),
+                  labelStyle: TextStyle(color: AppColor, fontSize: 26),
                 ),
               ),
               const SizedBox(
@@ -88,15 +85,14 @@ class _LanguagePageState extends State<LanguagePage> {
                 onTap: () {
                   var telugu = const Locale('te', 'IN');
                   Get.updateLocale(telugu);
-                  SpeechController.listen('selected language'.tr);
-                  Get.off(const LoginPage());
+                  TtsApi.api('selected language'.tr);
+                  Get.off(LoginPage());
                 },
                 child: const Chip(
                   backgroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   label: Text('తెలుగు'),
-                  labelStyle:
-                      TextStyle(color: ThemeColors.background, fontSize: 26),
+                  labelStyle: TextStyle(color: AppColor, fontSize: 26),
                 ),
               ),
             ],
@@ -104,7 +100,31 @@ class _LanguagePageState extends State<LanguagePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: const Mic(),
+      floatingActionButton: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 10,
+          backgroundColor: backgroundColor,
+          padding:
+              const EdgeInsets.only(top: 15, bottom: 15, right: 20, left: 20),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(28.0))),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.mic, color: AppColor, size: 26),
+            5.width,
+            Text('Tap to speak'.tr,
+                style: primaryTextStyle(size: 16, color: AppColor))
+          ],
+        ),
+        onPressed: () {
+          Get.to(Mic(
+            currentRoute: '/loginPage',
+          ));
+          // ExploreScreen().launch(context);
+        },
+      ).paddingOnly(bottom: 16),
     );
   }
 }

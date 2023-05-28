@@ -1,12 +1,11 @@
-import 'package:bank/constants/colors.dart';
-import 'package:bank/controllers/speech_controller.dart';
+import 'package:bank/controllers/user_controller.dart';
+import 'package:bank/services/services.dart';
+import 'package:bank/views/views.dart';
+import 'package:bank/views/widgets/paid_sucess_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
-
-import '../../../controllers/user_controller.dart';
-import '../home/home_page.dart';
 
 class PinPage extends StatelessWidget {
   PinPage({super.key, required this.to, required this.ammount});
@@ -17,31 +16,34 @@ class PinPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<UserController>(context);
-    bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
-      
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black,size: 32
-        ),
+        iconTheme: const IconThemeData(color: Colors.black, size: 32),
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
-        Image.network('https://logodix.com/logo/1763566.png',width: 100,)
+          Image.network(
+            'https://logodix.com/logo/1763566.png',
+            width: 100,
+          )
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-          const SizedBox(height: 40,),
+            const SizedBox(
+              height: 40,
+            ),
             Center(
               child: Text(
                 "Enter Your Pin".tr,
                 style: const TextStyle(color: Colors.black, fontSize: 28),
               ),
             ),
-           const SizedBox(height: 100,),
+            const SizedBox(
+              height: 100,
+            ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Pinput(
@@ -81,17 +83,18 @@ class PinPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.4,),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.4,
+            ),
             MaterialButton(
               onPressed: () {
-              
                 (val) async {
                   if (formKey.currentState!.validate()) {
                     String response = await provider.send(
                         from: provider.nickName,
                         to: to.text.trim(),
                         ammount: int.parse(ammount.text));
-            
+
                     if (response
                             .split(':')[1]
                             .replaceAll(RegExp("'"), '')
@@ -105,41 +108,40 @@ class PinPage extends StatelessWidget {
                                     1)
                             .trim() ==
                         'success') {
-                      SpeechController.listen(
-                          "Money successfully sent to ${to.text}");
+                      TtsApi.api("Money successfully sent to ${to.text}");
                       Get.snackbar(
                           'Success', "Money successfully sent to ${to.text}",
+                          backgroundColor: Colors.white,
                           snackPosition: SnackPosition.TOP);
                       provider.currentBalance = '';
                       provider.history.clear();
                       await provider
-                          .userdatafetch(
-                              provider.nickName.trim(), provider.pinNumber.trim())
+                          .userdatafetch(provider.nickName.trim(),
+                              provider.pinNumber.trim())
                           .whenComplete(() {
-                        Get.to(const HomePage());
+                        Get.off(const PaidSucessScreen());
                       });
                     }
                     if (response.split(':')[2].replaceAll(RegExp("'"), '') ==
                         " invalid json message format or no message}") {
-                      SpeechController.listen(
-                          "no user found with name ${to.text}");
+                      TtsApi.api("no user found with name ${to.text}");
                       Get.snackbar('Something went wrong',
                           "no user found with name ${to.text}",
-                          snackPosition: SnackPosition.TOP);
+                          snackPosition: SnackPosition.TOP,backgroundColor: Colors.white);
                     }
-            
+
                     if (response.split(':')[2].replaceAll(RegExp("'"), '') ==
                         " maximum transaction amount limit is 100 rupees}") {
-                      SpeechController.listen(
+                      TtsApi.api(
                           "maximum transaction amount limit is 100 rupees");
                       Get.snackbar('Something went wrong',
                           "maximum transaction amount limit is 100 rupees",
-                          snackPosition: SnackPosition.TOP);
+                          snackPosition: SnackPosition.TOP,backgroundColor: Colors.white);
                     }
                   }
                 };
               },
-              color: ThemeColors.green,
+              color: Colors.green,
               minWidth: MediaQuery.of(context).size.width * 0.8,
               height: 50,
               child: Text(

@@ -1,12 +1,23 @@
-import 'package:bank/constants/constants.dart';
+import 'package:bank/utils/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import '../../views.dart';
-import '../../widgets/widgets.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  String nickname;
+  String username;
+  String fullname;
+  String mobile;
+  SignUpPage(
+      {Key? key,
+      this.fullname = '',
+      this.mobile = '',
+      this.nickname = '',
+      this.username = ''})
+      : super(key: key);
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -27,9 +38,49 @@ class _SignUpPageState extends State<SignUpPage> {
     mobileNumber.dispose();
   }
 
+  Future<bool> showExitPopup() async {
+    return await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text(
+              'Exit App',
+              style: TextStyle(color: Colors.black),
+            ),
+            content: const Text(
+              'Do you want to exit an App?',
+              style: TextStyle(color: Colors.black),
+            ),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: AppColor),
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('No'),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: AppColor),
+                onPressed: () => SystemNavigator.pop(),
+                child: const Text('Yes'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
-
+    if (widget.nickname.isNotEmpty) {
+      nickName.text = widget.nickname;
+    }
+    if (widget.username.isNotEmpty) {
+      userName.text = widget.username;
+    }
+    if (widget.mobile.isNotEmpty) {
+      mobileNumber.text = widget.mobile;
+    }
+    if (widget.fullname.isNotEmpty) {
+      fullName.text = widget.fullname;
+    }
     // userName.text = textfieldcontroller.user;
     // fullName.text = textfieldcontroller.full;
     // mobileNumber.text = textfieldcontroller.mobile;
@@ -40,42 +91,59 @@ class _SignUpPageState extends State<SignUpPage> {
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
-          backgroundColor: ThemeColors.background,
+          backgroundColor: AppColor,
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Center(
-                  child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: Image.asset(Images.loginbanner)),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                    child: Image.asset(
+                  logo,
+                  scale: 4,
+                )),
+                const SizedBox(
+                  height: 10,
                 ),
                 Text(
                   'Create Account'.tr,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 32),
+                  style: const TextStyle(color: Colors.white, fontSize: 32),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Divider(
                     thickness: 2,
-                    color: Colors.white,
+                    color: Colors.white54,
                   ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black38,
+                            spreadRadius: 3,
+                            blurRadius: 5,
+                            offset: Offset(5, 10))
+                      ]),
                   child: Form(
                     key: formKey,
                     child: Column(
                       children: [
                         TextFormField(
-                          autofocus: true,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return '${'enter'.tr} ${'nick name'.tr}';
@@ -84,7 +152,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           },
                           controller: nickName,
                           keyboardType: TextInputType.text,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.black),
                           decoration: InputDecoration(
                               hintStyle: const TextStyle(fontSize: 18),
                               fillColor: Colors.white,
@@ -98,7 +167,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         TextFormField(
                           controller: userName,
-                          autofocus: true,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return '${'enter'.tr} ${'user name'.tr}';
@@ -106,7 +174,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             return null;
                           },
                           keyboardType: TextInputType.text,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.black),
                           decoration: InputDecoration(
                               hintStyle: const TextStyle(fontSize: 18),
                               fillColor: Colors.white,
@@ -119,10 +188,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           height: 10,
                         ),
                         TextFormField(
-                          autofocus: true,
                           controller: fullName,
                           keyboardType: TextInputType.text,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.black),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return '${'enter'.tr} ${'full name'.tr}';
@@ -143,9 +212,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         TextFormField(
                           // focusNode: focusNode1,
-                          autofocus: true,
+
                           keyboardType: TextInputType.number,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.black),
                           controller: mobileNumber,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -177,29 +247,31 @@ class _SignUpPageState extends State<SignUpPage> {
                             }
                           },
                           child: Chip(
-                            backgroundColor: Colors.white,
+                            backgroundColor: AppColor,
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             label: Text('Next'.tr),
                             labelStyle: const TextStyle(
-                                color: ThemeColors.background, fontSize: 26),
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                                fontSize: 22),
                           ),
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         RichText(
                             text: TextSpan(children: [
                           TextSpan(
                               text: "Already have an account?".tr,
-                              style:
-                                  const TextStyle(color: Colors.white, fontSize: 18)),
+                              style: const TextStyle(
+                                  color: AppColor, fontSize: 18)),
                           TextSpan(
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () => Get.to(const LoginPage()),
+                                ..onTap = () => Get.to(LoginPage()),
                               text: 'Login'.tr,
                               style: const TextStyle(
-                                  color: Colors.white,
+                                  color: AppColor,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold))
                         ]))
@@ -212,8 +284,36 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton:
-              Visibility(visible: !keyboardIsOpen, child: const Mic()),
+          floatingActionButton: Visibility(
+            visible: !keyboardIsOpen,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 10,
+                backgroundColor: backgroundColor,
+                padding: const EdgeInsets.only(
+                    top: 15, bottom: 15, right: 20, left: 20),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(28.0))),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.mic, color: AppColor, size: 26),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text('Tap to speak'.tr,
+                      style: primaryTextStyle(size: 16, color: AppColor))
+                ],
+              ),
+              onPressed: () {
+                Get.to(Mic(
+                  currentRoute: '/SignUpPage',
+                ));
+                // ExploreScreen().launch(context);
+              },
+            ).paddingOnly(bottom: 16),
+          ),
         ),
       ),
     );

@@ -47,12 +47,11 @@ class Commands {
     'register',
     'registration',
     'new registration',
-   
   ];
 
-  static final homePageCommand = [
+  static final HomeScreenCommand = [
     'go to home',
-    'go to homepage',
+    'go to HomeScreen',
     'go to home page',
     'go to home screen',
     'home',
@@ -64,13 +63,11 @@ class Commands {
     'take me to home page',
     'take me to home',
     'take me home page',
-    'homepage',
+    'HomeScreen',
     'home page'
   ];
 
-  static final logoutCommand = [
-    'log out','logout'
-  ];
+  static final logoutCommand = ['log out', 'logout'];
 
   static final checkBalanceCommand = [
     'check account balance',
@@ -146,15 +143,45 @@ class Commands {
     'go to transactions page',
     'go to transaction page',
     'go to transaction',
+    'go to transactions',
     'go to transaction screen',
     'show transaction',
+    'show transactions',
     'show history',
     'transactions',
+    'transactions history',
     'transactions details',
+    'transaction details',
     'history'
   ];
 
-  static final homePageCommandTelugu = ['హోం పేజి కి వెళ్ళు','హోమ్',];
+   static final qrCommand = [
+    'go to qr page',
+    'go to qr code page',
+    'my qr',
+    'my qr code'
+    'show qr',
+    'open qr',
+    'open qr code'
+    'show qr code',
+    'qr'
+  ];
+
+   static final qrScanner = [
+    'go to scanner page',
+    'go to scanner',
+    'qr scanner page',
+    'qr scanner'
+    'open scanner',
+    'scanner',
+    'open qr scanner'
+    
+  ];
+
+  static final HomeScreenCommandTelugu = [
+    'హోం పేజి కి వెళ్ళు',
+    'హోమ్',
+  ];
 
   static final loginPageCommandTelugu = ['లాగిన్పేజీ కి వెళ్ళు', 'లాగిన్'];
 
@@ -164,9 +191,12 @@ class Commands {
 
   static final sendCommandTelugu = ['డబ్బులు పంపండి'];
 
-  static final profileCommandTelugu = ['ప్రొఫైల్ పేజ్ కి వెళ్ళు','ప్రొఫైల్ పేజ్'];
+  static final profileCommandTelugu = [
+    'ప్రొఫైల్ పేజ్ కి వెళ్ళు',
+    'ప్రొఫైల్ పేజ్'
+  ];
 
   static final createCommandTelugu = ['కొత్త ఖాతా'];
 
-  static final balanceCommandtelugu = ['సంతులనం','ఖాతా'];
+  static final balanceCommandtelugu = ['సంతులనం', 'ఖాతా'];
 }

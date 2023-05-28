@@ -14,11 +14,18 @@ class UserController extends ChangeNotifier {
   String upiId = '';
   String currentBalance = '';
   List<Map<String, dynamic>> history = [];
+  List recentPeopleList = [];
   bool balance = false;
 
   UserController() {
     userdatafetch('', '');
     send(to: '', ammount: 0, from: '');
+  }
+
+  clearHistory() async {
+    history.clear();
+    notifyListeners();
+    transactions(nickName: nickName);
   }
 
   void showBalance(val) {
@@ -28,6 +35,11 @@ class UserController extends ChangeNotifier {
       balance = false;
       notifyListeners();
     });
+  }
+
+  notLoading() {
+    isLoading = false;
+    notifyListeners();
   }
 
   clearData() {
@@ -43,18 +55,32 @@ class UserController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> recentPeople(BuildContext context) async {
+    for (var i = 0; i < history.length; i++) {
+      final demo = history[i]['to-from'];
+      if (!recentPeopleList.contains(demo)) {
+        recentPeopleList.add(demo);
+      }
+    }
+
+    notifyListeners();
+  }
+
   Future<void> transactions({required String nickName}) async {
+    isLoading = true;
+    notifyListeners();
     final response = await NetworkServices.history(nickName.trim());
     response.toString().split('}').map((e) {
       history.add({
         "date": e.split(':')[2].split(',')[0].replaceAll(RegExp("'"), ''),
-        "time": "${e.split(':')[3].replaceAll(RegExp("'"), "")}:${e.split(':')[4].replaceAll(RegExp("'"), "")}",
+        "time":
+            "${e.split(':')[3].replaceAll(RegExp("'"), "")}:${e.split(':')[4].replaceAll(RegExp("'"), "")}",
         "to-from": e.split(':')[6].split(',')[0].replaceAll(RegExp("'"), ''),
         "amount": e.split(':')[7].split(',')[0].replaceAll(RegExp("'"), ''),
         "balance": e.split(':')[8].split(',')[0].replaceAll(RegExp("'"), '')
       });
     }).toList();
-
+    isLoading = false;
     notifyListeners();
   }
 
@@ -107,6 +133,7 @@ class UserController extends ChangeNotifier {
     notifyListeners();
     currentBalance =
         balance.toString().split(':')[1].replaceAll(RegExp('}'), '');
+  
     notifyListeners();
     isLoading = false;
     notifyListeners();

@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'package:bank/controllers/controllers.dart';
-import 'package:bank/controllers/textFieldController/textfield_controller.dart.dart';
-import 'package:bank/controllers/user_controller.dart';
-import 'package:bank/views/features/history/history.dart';
-import 'package:bank/views/features/profile/profile_page.dart';
-import 'package:bank/views/features/send/send_page.dart';
+import 'package:bank/utils/images.dart';
+import 'package:bank/views/features/send/amount_Screen.dart';
+import 'package:bank/views/features/send/to_person.dart';
 import 'package:bank/views/views.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/constants.dart';
-import '../views/features/balance/balance.dart';
+import '../services/services.dart';
+import '../views/widgets/widgets.dart';
 
 class MicController extends ChangeNotifier {
   final List _text = [];
@@ -21,10 +21,22 @@ class MicController extends ChangeNotifier {
   List get text => _text;
   bool _bottomSheet = false;
   bool get bottomSheet => _bottomSheet;
+  List amount = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+  String receviernickname = '';
+  String recevierimg = '';
+
+  setDetails(nickname, image) {
+    receviernickname = nickname;
+    recevierimg = image;
+  }
 
   showButtomSheet() {
     _bottomSheet = true;
     notifyListeners();
+  }
+
+  setEmpty() {
+    _text.clear();
   }
 
   listening(bool value) {
@@ -32,33 +44,34 @@ class MicController extends ChangeNotifier {
     notifyListeners();
   }
 
-  listen( context) async {
+  setNotFound(bool value) {
+    _isListening = value;
+    notifyListeners();
+  }
+
+  listen(context, currentRoute) async {
     // _isListening = true;
     // notifyListeners();
 
     for (var e in _text) {
       if (Commands.checkBalanceCommand.contains(e)) {
-        if (Get.currentRoute == '/ProfilePage' ||
-            Get.currentRoute == '/HomePage' ||
-            Get.currentRoute == '/BalancePage') {
-          notFound = false;
+        if (currentRoute == '/ProfilePage' ||
+            currentRoute == '/HomeScreen' ||
+            currentRoute == '/BalancePage') {
           notifyListeners();
-          SpeechController.listen('Enter Your Pin'.tr);
+          TtsApi.api('Enter Your Pin'.tr);
+          notFound = true;
           _text.clear();
           _isListening = false;
           notifyListeners();
-          Get.to(const Balance());
+          Get.off(PinVerifyScreen(
+            auth: true,
+          ));
           _text.remove(e);
           _text.clear();
           notifyListeners();
-          Timer(const Duration(seconds: 3), () {
-            showButtomSheet();
-            _text.remove(e);
-            _text.clear();
-            notifyListeners();
-          });
         } else {
-          SpeechController.listen('login to check your balance'.tr);
+          TtsApi.api('login to check your balance'.tr);
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -67,16 +80,18 @@ class MicController extends ChangeNotifier {
       }
 
       if (Commands.balanceCommandtelugu.contains(e)) {
-        if (Get.currentRoute == '/ProfilePage' ||
-            Get.currentRoute == '/HomePage' ||
-            Get.currentRoute == '/BalancePage') {
-          notFound = false;
+        if (currentRoute == '/ProfilePage' ||
+            currentRoute == '/HomeScreen' ||
+            currentRoute == '/BalancePage') {
           notifyListeners();
-          SpeechController.listen('Enter Your Pin'.tr);
+          TtsApi.api('Enter Your Pin'.tr);
+
           _text.clear();
           _isListening = false;
           notifyListeners();
-          Get.to(const Balance());
+          Get.off(PinVerifyScreen(
+            auth: true,
+          ));
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -87,7 +102,8 @@ class MicController extends ChangeNotifier {
             notifyListeners();
           });
         } else {
-          SpeechController.listen('login to check your balance'.tr);
+          TtsApi.api('login to check your balance'.tr);
+
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -96,16 +112,18 @@ class MicController extends ChangeNotifier {
       }
 
       if (Commands.balanceCommandtelugu.contains(e)) {
-        if (Get.currentRoute == '/ProfilePage' ||
-            Get.currentRoute == '/HomePage' ||
-            Get.currentRoute == '/BalancePage') {
-          notFound = false;
+        if (currentRoute == '/ProfilePage' ||
+            currentRoute == '/HomeScreen' ||
+            currentRoute == '/BalancePage') {
           notifyListeners();
-          SpeechController.listen('Enter Your Pin'.tr);
+
+          TtsApi.api('Enter Your Pin'.tr);
           _text.clear();
           _isListening = false;
           notifyListeners();
-          Get.to(const Balance());
+          Get.off(PinVerifyScreen(
+            auth: true,
+          ));
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -116,7 +134,7 @@ class MicController extends ChangeNotifier {
             notifyListeners();
           });
         } else {
-          SpeechController.listen('login to check your balance'.tr);
+          TtsApi.api('login to check your balance'.tr);
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -125,18 +143,17 @@ class MicController extends ChangeNotifier {
       }
 
       if (Commands.transactionsCommand.contains(e)) {
-        if (Get.currentRoute == '/SendPage' ||
-            Get.currentRoute == '/HomePage' ||
-            Get.currentRoute == '/ProfilePage' ||
-            Get.currentRoute == '/History' ||
-            Get.currentRoute == '/RequestPage' ||
-            Get.currentRoute == '/Balance') {
-          notFound = false;
+        if (currentRoute == '/SendPage' ||
+            currentRoute == '/HomeScreen' ||
+            currentRoute == '/ProfilePage' ||
+            currentRoute == '/History' ||
+            currentRoute == '/RequestPage' ||
+            currentRoute == '/Balance') {
           notifyListeners();
           _text.clear();
           _isListening = false;
           notifyListeners();
-          Get.to(const History());
+          Get.off(const Transactions());
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -147,7 +164,7 @@ class MicController extends ChangeNotifier {
             notifyListeners();
           });
         } else {
-          SpeechController.listen('your transaction details'.tr);
+          TtsApi.api('your transaction details'.tr);
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -156,16 +173,15 @@ class MicController extends ChangeNotifier {
       }
 
       if (Commands.selectEnglish.contains(e.toString().trim()) &&
-          Get.currentRoute == '/') {
-        notFound = false;
+          currentRoute == '/') {
         notifyListeners();
         Get.locale = const Locale('en', 'US');
-        SpeechController.listen('selected language'.tr);
+        TtsApi.api('selected language'.tr);
         _text.clear();
         _isListening = false;
         notifyListeners();
         Timer(const Duration(seconds: 3), () {
-          Get.to(const LoginPage(),
+          Get.off(LoginPage(),
               transition: Transition.cupertino,
               duration: const Duration(milliseconds: 200));
         });
@@ -174,16 +190,15 @@ class MicController extends ChangeNotifier {
       }
 
       if (Commands.selectTelugu.contains(e.toString().trim()) &&
-          Get.currentRoute == '/') {
-        notFound = false;
+          currentRoute == '/') {
         Get.locale = const Locale('te', 'IN');
         notifyListeners();
-        SpeechController.listen('selected language'.tr);
+        TtsApi.api('selected language'.tr);
         _text.clear();
         _isListening = false;
         notifyListeners();
         Timer(const Duration(seconds: 3), () {
-          Get.to(const LoginPage(),
+          Get.off(LoginPage(),
               transition: Transition.cupertino,
               duration: const Duration(milliseconds: 200));
         });
@@ -192,16 +207,16 @@ class MicController extends ChangeNotifier {
       }
 
       if (Commands.sendCommand.contains(e.toString().trim())) {
-        notFound = false;
         notifyListeners();
-        SpeechController.listen('going to money sending page'.tr);
+        notFound = false;
+        TtsApi.api('going to money sending page'.tr);
         _text.clear();
         _isListening = false;
         notifyListeners();
         Timer(const Duration(seconds: 3), () {
-          Get.to(const SendPage(),
-              transition: Transition.cupertino,
-              duration: const Duration(milliseconds: 200));
+          Get.off(
+            ToPerson(),
+          );
           _text.clear();
         });
         _text.clear();
@@ -209,14 +224,13 @@ class MicController extends ChangeNotifier {
       }
 
       if (Commands.loginPageCommand.contains(e)) {
-        notFound = false;
         notifyListeners();
-        SpeechController.listen('going to login page'.tr);
+        TtsApi.api('going to login page'.tr);
         _text.clear();
         _isListening = false;
         notifyListeners();
         Timer(const Duration(seconds: 3), () {
-          Get.to(const LoginPage(),
+          Get.off(LoginPage(),
               transition: Transition.cupertino,
               duration: const Duration(milliseconds: 200));
         });
@@ -225,24 +239,87 @@ class MicController extends ChangeNotifier {
         break;
       }
       if (Commands.backPageCommand.contains(e)) {
-        notFound = false;
         notifyListeners();
-        SpeechController.listen('going to back page'.tr);
-        _text.clear();
+        TtsApi.api('going to back page'.tr);
+        setEmpty();
         _isListening = false;
         notifyListeners();
         Timer(const Duration(seconds: 3), () {
           Get.back();
         });
-        _text.clear();
+
         notifyListeners();
       }
+
+      if (currentRoute == '/ToPerson' && e.toString().contains('name')) {
+        String nickname = _text.last.toString().replaceAll(RegExp('name '), '');
+        _text.clear();
+        _isListening = false;
+        notifyListeners();
+        Timer(const Duration(seconds: 3), () {
+          Get.off(ToPerson(nickname: nickname));
+        });
+      }
+
+      if (currentRoute == '/AmountPage' &&
+          _text.isNotEmpty &&
+          _text.last.toString().replaceAll(RegExp(' '), '') != 'try again') {
+        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' +
+            _text.toString() +
+            _text.last.toString().replaceAll(RegExp(' '), ''));
+        _text.clear();
+        _isListening = false;
+        notifyListeners();
+        Timer(const Duration(seconds: 3), () {
+          Get.off(PinVerifyScreen(
+              amount: _text.last,
+              name: 'sai',
+              auth: true,
+              page: 'paycomponent'));
+        });
+      }
+
+      if (currentRoute == '/ChatScreen' && e.toString().contains('pay')) {
+        _text.clear();
+        _isListening = false;
+        notifyListeners();
+        Timer(const Duration(seconds: 3), () {
+          Get.off( AmountPage(
+            image: recevierimg,
+            nickname: receviernickname,
+            nicknameeng:receviernickname,
+          ));
+        });
+      }
+
+      if (currentRoute == '/SignUpPage' && e.toString().contains('nickname')) {
+        String nickname =
+            _text.last.toString().replaceAll(RegExp('nickname '), '');
+        _text.clear();
+        _isListening = false;
+        notifyListeners();
+        Timer(const Duration(seconds: 3), () {
+          Get.off(SignUpPage(nickname: nickname));
+        });
+      }
+
+      if (currentRoute == '/SignUpPage' && e.toString().contains('username')) {
+        String username =
+            _text.last.toString().replaceAll(RegExp('username '), '');
+        _text.clear();
+        _isListening = false;
+        notifyListeners();
+        Timer(const Duration(seconds: 3), () {
+          Get.off(SignUpPage(username: username));
+        });
+      }
+
       if (Commands.signUpPageCommand.contains(e)) {
         final provider = Provider.of<UserController>(context);
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        notFound = false;
+
         notifyListeners();
-        SpeechController.listen('going to register page'.tr);
+        TtsApi.api('going to register page'.tr);
         provider.clearData();
         prefs.setString('nickName', '');
         prefs.setString('pin', '');
@@ -251,7 +328,7 @@ class MicController extends ChangeNotifier {
         _isListening = false;
         notifyListeners();
         Timer(const Duration(seconds: 3), () {
-          Get.off(const SignUpPage(),
+          Get.off(SignUpPage(),
               transition: Transition.cupertino,
               duration: const Duration(milliseconds: 200));
         });
@@ -259,13 +336,21 @@ class MicController extends ChangeNotifier {
         notifyListeners();
       }
 
-      if (Get.currentRoute == '/LoginPage') {
-        final textfieldController =
-            Provider.of<TextFieldController>(context, listen: false);
-        textfieldController.newNickName(value: e);
+      if (currentRoute == '/LoginPage' && e.toString().contains('nickname')) {
+        String nickname =
+            _text.last.toString().replaceAll(RegExp('nickname '), '');
+
+        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' +
+            _text.toString());
+        _text.clear();
+        _isListening = false;
+        notifyListeners();
+        Timer(const Duration(seconds: 3), () {
+          Get.off(LoginPage(nickname: nickname));
+        });
       }
 
-      if (Get.currentRoute == '/SignUpPage') {
+      if (currentRoute == '/SignUpPage') {
         final textfieldController =
             Provider.of<TextFieldController>(context, listen: false);
         if (e.toString().contains('nick name') ||
@@ -288,7 +373,7 @@ class MicController extends ChangeNotifier {
           textfieldController.newupi(value: e.toString().split(' ')[1]);
         }
       }
-      if (Get.currentRoute == '/SendPage') {
+      if (currentRoute == '/SendPage') {
         final textfieldController =
             Provider.of<TextFieldController>(context, listen: false);
         if (e.toString().contains('send') &&
@@ -318,29 +403,28 @@ class MicController extends ChangeNotifier {
         }
       }
 
-      if (Commands.homePageCommand.contains(e)) {
-        if (Get.currentRoute == '/SendPage' ||
-            Get.currentRoute == '/HomePage' ||
-            Get.currentRoute == '/ProfilePage' ||
-            Get.currentRoute == '/History' ||
-            Get.currentRoute == '/RequestPage' ||
-            Get.currentRoute == '/Balance') {
-          notFound = false;
+      if (Commands.HomeScreenCommand.contains(e)) {
+        if (currentRoute == '/SendPage' ||
+            currentRoute == '/HomeScreen' ||
+            currentRoute == '/ProfilePage' ||
+            currentRoute == '/History' ||
+            currentRoute == '/RequestPage' ||
+            currentRoute == '/Balance') {
           notifyListeners();
-          SpeechController.listen('going to home page'.tr);
+          TtsApi.api('going to home page'.tr);
 
           _text.clear();
           _isListening = false;
           notifyListeners();
           Timer(const Duration(seconds: 3), () {
-            Get.to(const HomePage(),
+            Get.off(const MainScreen(),
                 transition: Transition.cupertino,
                 duration: const Duration(milliseconds: 200));
           });
           _text.clear();
           notifyListeners();
         } else {
-          SpeechController.listen('login to go to home page');
+          TtsApi.api('login to go to home page');
           _text.remove(e);
           _text.clear();
           notifyListeners();
@@ -349,16 +433,20 @@ class MicController extends ChangeNotifier {
 
       if (Commands.logoutCommand.contains(e)) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        if (Get.currentRoute == '/SendPage' ||
-            Get.currentRoute == '/HomePage' ||
-            Get.currentRoute == '/ProfilePage' ||
-            Get.currentRoute == '/History' ||
-            Get.currentRoute == '/RequestPage' ||
-            Get.currentRoute == '/Balance') {
+        if (currentRoute == '/SendPage' ||
+            currentRoute == '/HomeScreen' ||
+            currentRoute == '/ProfilePage' ||
+            currentRoute == '/History' ||
+            currentRoute == '/RequestPage' ||
+            currentRoute == '/MainScreen' ||
+            currentRoute == '/ChatScreen' ||
+            currentRoute == '/ToPerson' ||
+            currentRoute == '/TransactionsPage' ||
+            currentRoute == '/Balance') {
           final provider = Provider.of<UserController>(context, listen: false);
-          notFound = false;
+
           notifyListeners();
-          SpeechController.listen('you have logged out'.tr);
+          TtsApi.api('you have logged out'.tr);
           provider.clearData();
           prefs.setString('nickName', '');
           prefs.setString('pin', '');
@@ -367,7 +455,7 @@ class MicController extends ChangeNotifier {
           _isListening = false;
           notifyListeners();
           provider.clearData();
-          Get.off(const LoginPage());
+          Get.off(LoginPage());
 
           _text.clear();
           notifyListeners();
@@ -375,38 +463,64 @@ class MicController extends ChangeNotifier {
       }
 
       if (Commands.profilePageCommand.contains(e)) {
-        if (Get.currentRoute == '/SendPage' ||
-            Get.currentRoute == '/HomePage' ||
-            Get.currentRoute == '/ProfilePage' ||
-            Get.currentRoute == '/History' ||
-            Get.currentRoute == '/RequestPage' ||
-            Get.currentRoute == '/Balance') {
-          notFound = false;
+        if (currentRoute == '/SendPage' ||
+            currentRoute == '/HomeScreen' ||
+            currentRoute == '/ProfilePage' ||
+            currentRoute == '/History' ||
+            currentRoute == '/RequestPage' ||
+            currentRoute == '/Balance') {
           notifyListeners();
-          SpeechController.listen('going to profile page'.tr);
+          TtsApi.api('going to profile page'.tr);
           _text.clear();
           _isListening = false;
           notifyListeners();
           Timer(const Duration(seconds: 3), () {
-            Get.to(const ProfilePage(),
+            Get.off(ProfilePage(),
                 transition: Transition.cupertino,
                 duration: const Duration(milliseconds: 200));
           });
         } else {
-          SpeechController.listen('login to show profile');
+          TtsApi.api('login to show profile');
           _text.remove(e);
           _text.clear();
           notifyListeners();
         }
       }
 
-      // if(notFound){
-      // "క్షమించండి ఆదేశం గుర్తించబడలేదు మళ్లీ ప్రయత్నించండి"
-      //   SpeechController.listen('Sorry command not recognized try again');
-      //   _text.clear();
-      //   _isListening = false;
-      //   notifyListeners();
-      // }
+      if (e == 'try again') {
+        notFound = false;
+        notifyListeners();
+      }
+      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+          notFound.toString());
+      if ((Commands.backPageCommand.contains(e) &&
+              Commands.HomeScreenCommand.contains(e) &&
+              Commands.HomeScreenCommandTelugu.contains(e) &&
+              Commands.balanceCommandtelugu.contains(e) &&
+              Commands.checkBalanceCommand.contains(e) &&
+              Commands.createCommandTelugu.contains(e) &&
+              Commands.deleteAccountCommandTelugu.contains(e) &&
+              Commands.loginPageCommand.contains(e) &&
+              Commands.loginPageCommandTelugu.contains(e) &&
+              Commands.logoutCommand.contains(e) &&
+              Commands.logoutCommandTelugu.contains(e) &&
+              Commands.profileCommandTelugu.contains(e) &&
+              Commands.profilePageCommand.contains(e) &&
+              Commands.selectEnglish.contains(e) &&
+              Commands.selectTelugu.contains(e) &&
+              Commands.sendCommand.contains(e) &&
+              Commands.sendCommandTelugu.contains(e) &&
+              Commands.signUpPageCommand.contains(e) &&
+              Commands.transactionsCommand.contains(e)) ==
+          false) {
+        if (e == 'try again') {
+          notFound = false;
+          notifyListeners();
+        } else {
+          notFound = true;
+          notifyListeners();
+        }
+      }
     }
 
     // SpeechController.listen('Sorry command not recognized try again');

@@ -16,7 +16,7 @@ class TextFieldController extends ChangeNotifier {
   }
 
   Future<void> newNickName({required String value}) async {
-    nickname = value;
+    nickname = value.toString().replaceAll(RegExp('nickname '),'');
     notifyListeners();
   }
 

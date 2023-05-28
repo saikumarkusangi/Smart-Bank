@@ -1,3 +1,3 @@
-export './mic.dart';
-export './action_box.dart';
-export './avatar_image.dart';
+export './credit_card.dart';
+export '../features/qr/qrScannerPage.dart';
+export './PinVerifyScreen.dart';
