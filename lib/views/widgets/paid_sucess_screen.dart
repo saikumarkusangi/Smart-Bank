@@ -45,7 +45,7 @@ class _PaidSucessScreenState extends State<PaidSucessScreen> {
             height: 50,
           ),
           Text(
-            'Payment Successful'.tr,
+            'Payment successful'.tr,
             style: const TextStyle(color: Colors.white, fontSize: 24),
           ),
           const SizedBox(
@@ -55,7 +55,7 @@ class _PaidSucessScreenState extends State<PaidSucessScreen> {
             labelStyle: const TextStyle(
                 color: Colors.black, fontWeight: FontWeight.normal),
             labelPadding: const EdgeInsets.symmetric(horizontal: 20),
-            label: const Text('Done'),
+            label: Text('Done'.tr),
             onPressed: () {
               scratchCardDialog(context, rewards[rand.nextInt(5)]);
             },
@@ -136,8 +136,8 @@ Future<bool?> scratchCardDialog(context, ammount) async {
                               ),
                               Text(
                                   ammount == 0
-                                      ? 'Oops!! try next time '
-                                      : 'Ewwwwwww 🥳🥳\nYou Earned ₹$ammount Cashback',
+                                      ? 'Oops!! try next time '.tr
+                                      : 'You Earned Cashback'.tr,
                                   style: primaryTextStyle(
                                       size: 20, color: AppColor)),
                             ],
@@ -150,7 +150,7 @@ Future<bool?> scratchCardDialog(context, ammount) async {
                 const SizedBox(
                   height: 15,
                 ),
-                Text("scratch the above card for your reward",
+                Text("Scratch the above card for your reward".tr,
                     style: primaryTextStyle(size: 16, color: backgroundColor)),
               ],
             ),
@@ -191,8 +191,8 @@ class RewardReveal extends StatelessWidget {
               ),
               Text(
                   ammount == 0
-                      ? 'Oops!! try next time '
-                      : 'Ewwwwwww 🥳🥳\nYou Earned ₹$ammount Cashback',
+                      ? 'Oops!! try next time'.tr
+                      : 'You Earned Cashback'.tr,
                   style: primaryTextStyle(size: 20, color: AppColor)),
             ],
           ),

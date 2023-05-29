@@ -235,41 +235,41 @@ class OnBoardingPageState extends State<OnBoardingPage> {
             ),
           ),
           PageViewModel(
-            title: "Commands Guide".tr,
+            title: "Try saying".tr,
             bodyWidget: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'To go to home page'.tr,
-                  style: const TextStyle(fontSize: 18),
+                  'Go to home page'.tr,
+                  style: const TextStyle(fontSize: 22),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 Text(
-                  'To go to profile page'.tr,
-                  style: const TextStyle(fontSize: 18),
+                  'Go to profile page'.tr,
+                  style: const TextStyle(fontSize: 22),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 Text(
-                  'To check balance'.tr,
-                  style: const TextStyle(fontSize: 18),
+                  'Check balance'.tr,
+                  style: const TextStyle(fontSize: 22),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 Text(
-                  'To see histoy'.tr,
-                  style: const TextStyle(fontSize: 18),
+                  'See history'.tr,
+                  style: const TextStyle(fontSize: 22),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 Text(
-                  'To send money'.tr,
-                  style: const TextStyle(fontSize: 18),
+                  'Send money'.tr,
+                  style: const TextStyle(fontSize: 22),
                 )
               ],
             ),

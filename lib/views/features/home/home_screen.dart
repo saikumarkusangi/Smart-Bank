@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:bank/controllers/telugu_data_controller.dart';
 import 'package:bank/services/services.dart';
 import 'package:bank/views/features/send/to_person.dart';
 import 'package:bank/views/views.dart';
@@ -66,9 +67,13 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final userDataProvider = Provider.of<UserController>(context);
     final balanceProvider = Provider.of<BalanceProvider>(context);
+   
+
+
     print("#########################");
     print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&' +
         userDataProvider.recentPeopleList.length.toString());
+    userDataProvider.recentPeople(context);
 
     print('balanceProvider.showbalance  ' +
         balanceProvider.showbalance.toString());
@@ -76,9 +81,8 @@ class HomeScreenState extends State<HomeScreen> {
     if (balanceProvider.showbalance == true) {
       Timer(Duration.zero, () {
         if (mounted) {
-           TtsApi.api('your account is ${userDataProvider.currentBalance}');
+          TtsApi.api('your account is ${userDataProvider.currentBalance}');
           _cardController.toggleCard();
-         
         }
       });
       Timer(const Duration(seconds: 5), () {

@@ -1,16 +1,33 @@
 import 'dart:convert';
 
 import 'package:bank/services/constants.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:pointycastle/asymmetric/api.dart';
+import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:encrypt/encrypt.dart';
+import 'package:pointycastle/asymmetric/api.dart';
+import 'package:pointycastle/asymmetric/oaep.dart';
+import 'package:pointycastle/asymmetric/rsa.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:pointycastle/export.dart';
 class NetworkServices {
+
+
+
   static userlogin<UserData>(String nickName, String pinNumber) async {
     try {
       final response = await http.post(
         Uri.parse(ApiKey.url),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(
-          {"action": "details", "nick_name": nickName},
+          {
+            "action": "details",
+            "nick_name": nickName,
+          },
         ),
       );
 
@@ -69,19 +86,17 @@ class NetworkServices {
     }
   }
 
-
-    static update<UserData>(String key,value,nickname) async {
+  static update<UserData>(String key, value, nickname) async {
     try {
       final response = await http.post(
         Uri.parse(ApiKey.url),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode(
-{
-    "action":"update",
-    'nick_name':nickname.toString(),
-    "key":key.toString(),
-    "value":value.toString()
-}),
+        body: jsonEncode({
+          "action": "update",
+          'nick_name': nickname.toString(),
+          "key": key.toString(),
+          "value": value.toString()
+        }),
       );
 
       if (response.statusCode == 200) {
@@ -91,10 +106,6 @@ class NetworkServices {
       rethrow;
     }
   }
-
-
-
-     
 
   static currentBalance<UserData>(String nickName) async {
     try {

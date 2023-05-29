@@ -149,7 +149,7 @@ class _PinSetUpState extends State<PinSetUp> {
                               // autofocus: true,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "enter upi id";
+                                  return "Enter upi id".tr;
                                 }
                                 return null;
                               },
@@ -157,7 +157,7 @@ class _PinSetUpState extends State<PinSetUp> {
                                   hintStyle: const TextStyle(fontSize: 18),
                                   fillColor: Colors.white,
                                   filled: true,
-                                  hintText: 'enter upi id'.tr,
+                                  hintText: 'Enter upi id'.tr,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10))),
                               onFieldSubmitted: (value) =>
@@ -232,15 +232,15 @@ class _PinSetUpState extends State<PinSetUp> {
                                           .replaceAll(RegExp("'"), '')
                                           .toString()
                                           .trim() ==
-                                      'success}') {
-                                    TtsApi.api("Account created successfully");
-                                    Get.snackbar('Success',
-                                        "Account created successfully",
+                                      'Success'.tr) {
+                                    TtsApi.api("Account created successfully".tr);
+                                    Get.snackbar('Success'.tr,
+                                        "Account created successfully".tr,
                                         backgroundColor: Colors.white,
                                         snackPosition: SnackPosition.TOP);
                                     await provider.userdatafetch(
                                         widget.nickNmae, pin.text.trim());
-                                    Get.to(const MainScreen());
+                                    Get.off(const MainScreen());
                                   } else {
                                     TtsApi.api(res
                                         .split(':')[2]
@@ -250,7 +250,7 @@ class _PinSetUpState extends State<PinSetUp> {
                                         .trim());
                                     Get.snackbar(
                                         backgroundColor: Colors.white,
-                                        'Failed',
+                                        'Failed'.tr,
                                         res
                                             .split(':')[2]
                                             .replaceAll(RegExp("'"), '')

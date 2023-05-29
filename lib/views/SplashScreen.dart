@@ -34,6 +34,7 @@ class SplashScreenState extends State<SplashScreen> {
     checkFirstSeen();
     check();
      getConnectivity();
+     
   }
 
 

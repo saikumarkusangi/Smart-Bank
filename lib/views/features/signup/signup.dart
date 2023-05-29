@@ -54,12 +54,12 @@ class _SignUpPageState extends State<SignUpPage> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: AppColor),
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('No'),
+                child:  Text('No'.tr),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: AppColor),
                 onPressed: () => SystemNavigator.pop(),
-                child: const Text('Yes'),
+                child:  Text('Yes'.tr),
               ),
             ],
           ),
@@ -146,7 +146,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         TextFormField(
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return '${'enter'.tr} ${'nick name'.tr}';
+                              return 'Enter nick name'.tr;
                             }
                             return null;
                           },
@@ -158,7 +158,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               hintStyle: const TextStyle(fontSize: 18),
                               fillColor: Colors.white,
                               filled: true,
-                              hintText: '${'enter'.tr} ${'nick name'.tr}',
+                              hintText: 'Enter nick name'.tr,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10))),
                         ),
@@ -169,7 +169,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           controller: userName,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return '${'enter'.tr} ${'user name'.tr}';
+                              return 'Enter user name'.tr;
                             }
                             return null;
                           },
@@ -180,7 +180,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               hintStyle: const TextStyle(fontSize: 18),
                               fillColor: Colors.white,
                               filled: true,
-                              hintText: '${'enter'.tr} ${'user name'.tr}',
+                              hintText: 'Enter user name'.tr,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10))),
                         ),
@@ -194,7 +194,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               fontSize: 20, color: Colors.black),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return '${'enter'.tr} ${'full name'.tr}';
+                              return 'Enter full name'.tr;
                             }
                             return null;
                           },
@@ -202,7 +202,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               hintStyle: const TextStyle(fontSize: 18),
                               fillColor: Colors.white,
                               filled: true,
-                              hintText: '${'enter'.tr} ${'full name'.tr}',
+                              hintText: 'Enter full name'.tr,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10))),
                           // onFieldSubmitted: (value) => FocusScope.of(context).requestFocus(focusNode1) ,
@@ -219,7 +219,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           controller: mobileNumber,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return '${'enter'.tr} ${'Mobile'.tr}';
+                              return 'Enter mobile number'.tr;
                             }
                             return null;
                           },
@@ -227,7 +227,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               hintStyle: const TextStyle(fontSize: 18),
                               fillColor: Colors.white,
                               filled: true,
-                              hintText: '${'enter'.tr} ${'Mobile'.tr}',
+                              hintText: 'Enter mobile number'.tr,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10))),
                           // onFieldSubmitted: (value) => FocusManager.instance.primaryFocus?.unfocus()

@@ -25,6 +25,7 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  
     final rand = Random();
     List images = [
       'https://xsgames.co/randomusers/assets/avatars/male/${rand.nextInt(78)}.jpg',
@@ -106,7 +107,9 @@ class TransactionItem extends StatelessWidget {
                                                             .toString())
                                                     ? const Text('2 days ago')
                                                     : Text(
-                                                        '${data['date'].split("-")[2]} ${months[int.parse(data['date'].split("-")[1]) - 1]} ${int.parse(data['date'].split("-")[0])}',
+                                                        Get.locale!.languageCode == 'te'
+                                                            ? '${data['date'].split("-")[2]}   ${telugumonths[int.parse(data['date'].split("-")[1]) - 1]} ${int.parse(data['date'].split("-")[0])}'
+                                                            : '${data['date'].split("-")[2]}   ${months[int.parse(data['date'].split("-")[1]) - 1]} ${int.parse(data['date'].split("-")[0])}',
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .bodySmall,

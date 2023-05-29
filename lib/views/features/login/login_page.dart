@@ -66,8 +66,11 @@ class _LoginPageState extends State<LoginPage> {
                 nickNameController.text.trim(), pinController.text.trim());
 
             if (pinController.text == provider.pinNumber.trim()) {
-              TtsApi.api("you are successfully logged in".tr);
-              Get.snackbar("Success".tr, "you are successfully logged in".tr,
+              setState(() {
+                _isloading = false;
+              });
+              TtsApi.api("Successfully logged in".tr);
+              Get.snackbar("Success".tr, "You are successfully logged in".tr,
                   backgroundColor: Colors.white);
               Get.off(const MainScreen());
               prefs.setBool('user', true);
@@ -80,8 +83,11 @@ class _LoginPageState extends State<LoginPage> {
                 nickNameController.text.trim(), pinController.text.trim());
 
             if (pinController.text == provider.pinNumber.trim()) {
-              TtsApi.api("you are successfully logged in".tr);
-              Get.snackbar("Success".tr, "you are successfully logged in".tr,
+              setState(() {
+                _isloading = false;
+              });
+              TtsApi.api("Successfully logged in".tr);
+              Get.snackbar("Success".tr, "You are successfully logged in".tr,
                   backgroundColor: Colors.white);
               Get.off(const MainScreen());
               prefs.setBool('user', true);
@@ -89,20 +95,26 @@ class _LoginPageState extends State<LoginPage> {
               prefs.setString('pin', provider.pinNumber.trim());
               textfieldcontroller.newNickName(value: 'nick name'.tr);
             } else {
+              setState(() {
+                _isloading = false;
+              });
               nickNameController.text = '';
               pinController.text = '';
-              TtsApi.api("you have entered incorrect password".tr);
+              TtsApi.api("You have entered incorrect password".tr);
               Get.snackbar("Failed".tr, "Incorrect Password".tr,
                   backgroundColor: Colors.white);
             }
           }
         } catch (e) {
+          setState(() {
+            _isloading = false;
+          });
           nickNameController.text = '';
           pinController.text = '';
           TtsApi.api(
-              "${"No user Exits with nick name".tr}${nickNameController.text}");
+              "${"No user Exists with nick name".tr}${nickNameController.text}");
           Get.snackbar("Failed".tr,
-              "${"No user Exits with nick name".tr}${nickNameController.text}",
+              "${"No user Exists with nick name".tr}${nickNameController.text}",
               backgroundColor: Colors.white);
         }
       }
@@ -112,24 +124,24 @@ class _LoginPageState extends State<LoginPage> {
       return await showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text(
-                'Exit App',
+              title: Text(
+                'Exit App'.tr,
                 style: TextStyle(color: Colors.black),
               ),
-              content: const Text(
-                'Do you want to exit an App?',
+              content: Text(
+                'Do you want to exit an App?'.tr,
                 style: TextStyle(color: Colors.black),
               ),
               actions: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: AppColor),
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text('No'),
+                  child: Text('No'.tr),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: AppColor),
                   onPressed: () => SystemNavigator.pop(),
-                  child: const Text('Yes'),
+                  child: Text('Yes'.tr),
                 ),
               ],
             ),
@@ -217,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
                                   hintStyle: const TextStyle(fontSize: 18),
                                   fillColor: Colors.white,
                                   filled: true,
-                                  hintText: 'nick name'.tr,
+                                  hintText: 'Nick name'.tr,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10))),
                               onFieldSubmitted: (value) =>

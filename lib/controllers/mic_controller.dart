@@ -49,7 +49,7 @@ class MicController extends ChangeNotifier {
     notifyListeners();
   }
 
-  listen(context, currentRoute) async {
+  listen(context, currentRoute, name) async {
     // _isListening = true;
     // notifyListeners();
 
@@ -59,80 +59,19 @@ class MicController extends ChangeNotifier {
             currentRoute == '/HomeScreen' ||
             currentRoute == '/BalancePage') {
           notifyListeners();
-          TtsApi.api('Enter Your Pin'.tr);
-          notFound = true;
           _text.clear();
           _isListening = false;
-          notifyListeners();
-          Get.off(PinVerifyScreen(
-            auth: true,
-          ));
-          _text.remove(e);
-          _text.clear();
-          notifyListeners();
-        } else {
-          TtsApi.api('login to check your balance'.tr);
-          _text.remove(e);
-          _text.clear();
-          notifyListeners();
-          break;
-        }
-      }
-
-      if (Commands.balanceCommandtelugu.contains(e)) {
-        if (currentRoute == '/ProfilePage' ||
-            currentRoute == '/HomeScreen' ||
-            currentRoute == '/BalancePage') {
-          notifyListeners();
-          TtsApi.api('Enter Your Pin'.tr);
-
-          _text.clear();
-          _isListening = false;
-          notifyListeners();
-          Get.off(PinVerifyScreen(
-            auth: true,
-          ));
-          _text.remove(e);
-          _text.clear();
           notifyListeners();
           Timer(const Duration(seconds: 3), () {
-            showButtomSheet();
-            _text.remove(e);
-            _text.clear();
-            notifyListeners();
+            Get.off(PinVerifyScreen(
+              auth: true,
+              page: 'balance',
+            ));
           });
-        } else {
-          TtsApi.api('login to check your balance'.tr);
 
           _text.remove(e);
           _text.clear();
           notifyListeners();
-          break;
-        }
-      }
-
-      if (Commands.balanceCommandtelugu.contains(e)) {
-        if (currentRoute == '/ProfilePage' ||
-            currentRoute == '/HomeScreen' ||
-            currentRoute == '/BalancePage') {
-          notifyListeners();
-
-          TtsApi.api('Enter Your Pin'.tr);
-          _text.clear();
-          _isListening = false;
-          notifyListeners();
-          Get.off(PinVerifyScreen(
-            auth: true,
-          ));
-          _text.remove(e);
-          _text.clear();
-          notifyListeners();
-          Timer(const Duration(seconds: 3), () {
-            showButtomSheet();
-            _text.remove(e);
-            _text.clear();
-            notifyListeners();
-          });
         } else {
           TtsApi.api('login to check your balance'.tr);
           _text.remove(e);
@@ -141,6 +80,69 @@ class MicController extends ChangeNotifier {
           break;
         }
       }
+
+      // if (Commands.balanceCommandtelugu.contains(e)) {
+      //   if (currentRoute == '/ProfilePage' ||
+      //       currentRoute == '/HomeScreen' ||
+      //       currentRoute == '/BalancePage') {
+      //     notifyListeners();
+      //     TtsApi.api('Enter Your Pin'.tr);
+
+      //     _text.clear();
+      //     _isListening = false;
+      //     notifyListeners();
+      //     Get.off(PinVerifyScreen(
+      //       auth: true,
+      //     ));
+      //     _text.remove(e);
+      //     _text.clear();
+      //     notifyListeners();
+      //     Timer(const Duration(seconds: 3), () {
+      //       showButtomSheet();
+      //       _text.remove(e);
+      //       _text.clear();
+      //       notifyListeners();
+      //     });
+      //   } else {
+      //     TtsApi.api('login to check your balance'.tr);
+
+      //     _text.remove(e);
+      //     _text.clear();
+      //     notifyListeners();
+      //     break;
+      //   }
+      // }
+
+      // if (Commands.balanceCommandtelugu.contains(e)) {
+      //   if (currentRoute == '/ProfilePage' ||
+      //       currentRoute == '/HomeScreen' ||
+      //       currentRoute == '/BalancePage') {
+      //     notifyListeners();
+
+      //     TtsApi.api('Enter Your Pin'.tr);
+      //     _text.clear();
+      //     _isListening = false;
+      //     notifyListeners();
+      //     Get.off(PinVerifyScreen(
+      //       auth: true,
+      //     ));
+      //     _text.remove(e);
+      //     _text.clear();
+      //     notifyListeners();
+      //     Timer(const Duration(seconds: 3), () {
+      //       showButtomSheet();
+      //       _text.remove(e);
+      //       _text.clear();
+      //       notifyListeners();
+      //     });
+      //   } else {
+      //     TtsApi.api('login to check your balance'.tr);
+      //     _text.remove(e);
+      //     _text.clear();
+      //     notifyListeners();
+      //     break;
+      //   }
+      // }
 
       if (Commands.transactionsCommand.contains(e)) {
         if (currentRoute == '/SendPage' ||
@@ -153,16 +155,15 @@ class MicController extends ChangeNotifier {
           _text.clear();
           _isListening = false;
           notifyListeners();
-          Get.off(const Transactions());
+          Timer(const Duration(seconds: 3), () {
+            Get.off(
+              const Transactions(),
+            );
+          });
+
           _text.remove(e);
           _text.clear();
           notifyListeners();
-          Timer(const Duration(seconds: 3), () {
-            showButtomSheet();
-            _text.remove(e);
-            _text.clear();
-            notifyListeners();
-          });
         } else {
           TtsApi.api('your transaction details'.tr);
           _text.remove(e);
@@ -171,6 +172,32 @@ class MicController extends ChangeNotifier {
           break;
         }
       }
+
+
+
+      // if (e.toString().contains('flight')) {
+      //   if (currentRoute == '/SendPage' ||
+      //       currentRoute == '/HomeScreen' ||
+      //       currentRoute == '/ProfilePage' ||
+      //       currentRoute == '/History' ||
+      //       currentRoute == '/RequestPage' ||
+      //       currentRoute == '/Balance') {
+      //     notifyListeners();
+      //     _text.clear();
+      //     _isListening = false;
+      //     notifyListeners();
+      //     Timer(const Duration(seconds: 3), () {
+      //       Get.off(
+      //         const Transactions(),
+      //       );
+      //     });
+
+      //     _text.remove(e);
+      //     _text.clear();
+      //     notifyListeners();
+      //   } 
+      // }
+
 
       if (Commands.selectEnglish.contains(e.toString().trim()) &&
           currentRoute == '/') {
@@ -251,8 +278,13 @@ class MicController extends ChangeNotifier {
         notifyListeners();
       }
 
-      if (currentRoute == '/ToPerson' && e.toString().contains('name')) {
-        String nickname = _text.last.toString().replaceAll(RegExp('name '), '');
+      if (currentRoute == '/ToPerson' && e.toString().contains('name') ||
+          e.toString().contains('పెరూ')) {
+        String nickname = _text.last
+            .toString()
+            .replaceAll(RegExp('name '), '')
+            .toString()
+            .replaceAll(RegExp('పెరూ '), '');
         _text.clear();
         _isListening = false;
         notifyListeners();
@@ -267,16 +299,17 @@ class MicController extends ChangeNotifier {
         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' +
             _text.toString() +
             _text.last.toString().replaceAll(RegExp(' '), ''));
-        _text.clear();
-        _isListening = false;
-        notifyListeners();
+
         Timer(const Duration(seconds: 3), () {
           Get.off(PinVerifyScreen(
               amount: _text.last,
-              name: 'sai',
+              name: name,
               auth: true,
               page: 'paycomponent'));
         });
+        _text.clear();
+        _isListening = false;
+        notifyListeners();
       }
 
       if (currentRoute == '/ChatScreen' && e.toString().contains('pay')) {
@@ -284,10 +317,10 @@ class MicController extends ChangeNotifier {
         _isListening = false;
         notifyListeners();
         Timer(const Duration(seconds: 3), () {
-          Get.off( AmountPage(
+          Get.off(AmountPage(
             image: recevierimg,
             nickname: receviernickname,
-            nicknameeng:receviernickname,
+            nicknameeng: receviernickname,
           ));
         });
       }
@@ -311,6 +344,40 @@ class MicController extends ChangeNotifier {
         notifyListeners();
         Timer(const Duration(seconds: 3), () {
           Get.off(SignUpPage(username: username));
+        });
+      }
+
+      if (currentRoute == '/SignUpPage' && e.toString().contains('fullname')) {
+        String fullname =
+            _text.last.toString().replaceAll(RegExp('fullname '), '');
+        _text.clear();
+        _isListening = false;
+        notifyListeners();
+        Timer(const Duration(seconds: 3), () {
+          Get.off(SignUpPage(fullname: fullname));
+        });
+      }
+
+      if (currentRoute == '/SignUpPage' && e.toString().contains('nickname')) {
+        String nickname =
+            _text.last.toString().replaceAll(RegExp('nickname '), '');
+        _text.clear();
+        _isListening = false;
+        notifyListeners();
+        Timer(const Duration(seconds: 3), () {
+          Get.off(SignUpPage(nickname: nickname));
+        });
+      }
+
+      if (currentRoute == '/SignUpPage' &&
+          e.toString().contains('mobile number')) {
+        String mobile =
+            _text.last.toString().replaceAll(RegExp('mobile number '), '');
+        _text.clear();
+        _isListening = false;
+        notifyListeners();
+        Timer(const Duration(seconds: 3), () {
+          Get.off(SignUpPage(mobile: mobile));
         });
       }
 
@@ -475,12 +542,12 @@ class MicController extends ChangeNotifier {
           _isListening = false;
           notifyListeners();
           Timer(const Duration(seconds: 3), () {
-            Get.off(ProfilePage(),
+            Get.off(const ProfilePage(),
                 transition: Transition.cupertino,
                 duration: const Duration(milliseconds: 200));
           });
         } else {
-          TtsApi.api('login to show profile');
+          TtsApi.api('login to show profile'.tr);
           _text.remove(e);
           _text.clear();
           notifyListeners();

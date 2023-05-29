@@ -26,6 +26,7 @@ class Commands {
     'signup',
     'signup page',
     'signup screen',
+    'కొత్త ఖాతా',
     'sign up screen',
     'open signup',
     'open sign up',
@@ -88,6 +89,8 @@ class Commands {
   static final profilePageCommand = [
     'go to profile',
     'go to profile page',
+    'ప్రొఫైల్ పేజీకి వెళ్లండి',
+    'ప్రొఫైల్ పేజీ',
     'go to profile screen',
     'profile',
     'profile page',
@@ -134,6 +137,8 @@ class Commands {
     'send page',
     'money send',
     'send money',
+    'డబ్బు పంపండి'
+    'డబ్బు పంపండి'
     'transfer',
     'transfer money',
     'money transfer'
@@ -148,6 +153,9 @@ class Commands {
     'show transaction',
     'show transactions',
     'show history',
+    'లావాదేవీలను'
+    'లావాదేవీలను చూపించు'
+    'లావాదేవీలు',
     'transactions',
     'transactions history',
     'transactions details',
@@ -161,6 +169,7 @@ class Commands {
     'my qr',
     'my qr code'
     'show qr',
+    'QR కోడ్',
     'open qr',
     'open qr code'
     'show qr code',
@@ -174,7 +183,9 @@ class Commands {
     'qr scanner'
     'open scanner',
     'scanner',
-    'open qr scanner'
+    'open qr scanner',
+    'qr స్కానర్',
+    'స్కానర్'
     
   ];
 

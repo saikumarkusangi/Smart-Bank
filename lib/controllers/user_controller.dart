@@ -94,6 +94,8 @@ class UserController extends ChangeNotifier {
     return response.toString();
   }
 
+  
+
   Future<void> userdatafetch(fnickName, fpinNumber) async {
     isLoading = true;
     notifyListeners();
@@ -121,7 +123,7 @@ class UserController extends ChangeNotifier {
                     .replaceAll(RegExp("'"), '')
                     .length -
                 1);
-
+    
     notifyListeners();
     checkBalance(nickName: nickName);
     transactions(nickName: nickName);

@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:bank/constants/constants.dart';
+import 'package:bank/controllers/telugu_data_controller.dart';
 import 'package:bank/utils/utils.dart';
 import 'package:bank/views/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:package_info/package_info.dart';
@@ -37,7 +40,6 @@ class ProfilePageState extends State<ProfilePage>
   void initState() {
     super.initState();
     sharedpref();
-    readout();
   }
 
   GoogleTranslator translator = GoogleTranslator();
@@ -57,44 +59,99 @@ class ProfilePageState extends State<ProfilePage>
     });
   }
 
-  readout() async {
-    await TtsApi.api('your name is a big name so plase');
-    await TtsApi.api('your nick name sai');
-  }
+  play() async {
+    final teluguDataProvider = Provider.of<TeluguDataController>(context);
+    final userDataProvider = Provider.of<UserController>(context);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  read(data, msg) async {
-    //await TtsApi.api("మీ పూర్తి పేరు $fullname");
-    await TtsApi.api("మీ మారుపేరు $data");
+    if (prefs.getString('language') == 'en') {
+      Timer(Duration.zero, () async {
+        if (mounted) {
+          await TtsApi.api('your nick name  ${userDataProvider.nickName}');
+        }
+      });
+      Timer(const Duration(seconds: 3), () async {
+        if (mounted) {
+          await TtsApi.api('your user name ${userDataProvider.userName}');
+        }
+      });
+      Timer(const Duration(seconds: 6), () async {
+        if (mounted) {
+          await TtsApi.api('your full name ${userDataProvider.fullName}');
+        }
+      });
+      Timer(const Duration(seconds: 9), () async {
+        if (mounted) {
+          await TtsApi.api('your u p i  i d ${userDataProvider.upiId}');
+        }
+      });
+      Timer(const Duration(seconds: 12), () async {
+        if (mounted) {
+          await TtsApi.api(
+              'your mobile number ${userDataProvider.phoneNumber}');
+        }
+      });
+    } else {
+      Timer(Duration.zero, () {
+        if (mounted) {
+          TtsApi.api('మీ మారుపేరు ${teluguDataProvider.nickname}');
+        }
+      });
+      Timer(const Duration(seconds: 3), () async {
+        if (mounted) {
+          await TtsApi.api(
+              'మీ వినియోగదారు పేరు ${teluguDataProvider.username}');
+        }
+      });
+      Timer(const Duration(seconds: 6), () async {
+        if (mounted) {
+          await TtsApi.api('మీ పూర్తి పేరు ${teluguDataProvider.fullname}');
+        }
+      });
+      Timer(const Duration(seconds: 9), () async {
+        if (mounted) {
+          await TtsApi.api('మీ యు పి ఐ ఐ డి ${teluguDataProvider.upiid}');
+        }
+      });
+      Timer(const Duration(seconds: 12), () async {
+        if (mounted) {
+          await TtsApi.api('మీ మొబైల్ నంబర్ ${teluguDataProvider.mobile}');
+        }
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    play();
+    //   await TtsApi.api('మీ మారుపేరు ${userDataProvider.nickName}');
+
+    // Timer(const Duration(seconds: 3), () async {
+    //   if (mounted) {
+    //     await TtsApi.api('మీ పూర్తి పేరు ${userDataProvider.fullName}');
+    //   }
+    // });
+    // Timer(const Duration(seconds: 6), () async {
+    //   if (mounted) {
+    //     await TtsApi.api('మీ యు పి ఐ ఐ డి ${userDataProvider.upiId}');
+    //   }
+    // });
+    // Timer(const Duration(seconds: 8), () async {
+    //   if (mounted) {
+    //     await TtsApi.api('మీ మొబైల్ నంబర్ ${userDataProvider.phoneNumber}');
+    //   }
+    // });
+
     final provider = Provider.of<UserController>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
-          title: Text("Profile",
+          title: Text("Profile".tr,
               style: primaryTextStyle(size: 18, color: backgroundColor)),
           key: scaffoldKey,
           elevation: 0,
           backgroundColor: AppColor,
-          actions: [
-            PopupMenuButton(
-              icon:
-                  const Icon(Icons.more_vert_outlined, color: backgroundColor),
-              onSelected: (dynamic v) {},
-              itemBuilder: (BuildContext context) {
-                List<PopupMenuEntry<Object>> list = [];
-
-                list.add(PopupMenuItem(
-                    value: 1,
-                    child: Text("Send feedback",
-                        style: primaryTextStyle(color: ColorBlack))));
-                return list;
-              },
-            )
-          ],
         ),
         body: ListView(
           children: [
@@ -110,20 +167,20 @@ class ProfilePageState extends State<ProfilePage>
                     child: Stack(
                       children: [
                         profileImage != null
-                            ? SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: 250,
-                                child: Image.file(profileImage!,
-                                    fit: BoxFit.cover))
+                            ? CircleAvatar(
+                                radius: 60,
+                                backgroundImage: FileImage(
+                                  profileImage!,
+                                ))
                             : CircleAvatar(
-                                radius: 80,
+                                radius: 60,
                                 backgroundImage: AssetImage(
                                   profileImage != null
                                       ? profileImage as String
                                       : user,
                                 )),
                         Positioned(
-                          bottom: 10,
+                          bottom: 20,
                           right: 20,
                           child: Container(
                             width: 40,
@@ -141,9 +198,6 @@ class ProfilePageState extends State<ProfilePage>
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
                 Divider(color: Colors.grey[300], thickness: 1),
                 const SizedBox(
                   height: 10,
@@ -151,30 +205,22 @@ class ProfilePageState extends State<ProfilePage>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Personal Details".tr.toUpperCase(),
+                    Text("PERSONAL DETAILS".tr,
                         style: Theme.of(context).textTheme.headlineMedium),
                     const SizedBox(
                       height: 20,
                     ),
-                    accountWidget(
-                        nick, "nick name".tr.toUpperCase(), provider.nickName),
-                    24.height,
-                    accountWidget(user, "User Name".tr, provider.userName),
-                    24.height,
-                    accountWidget(full, "Full Name".tr, provider.fullName),
-                    24.height,
-                    accountWidget(
-                        upi, "Upi id".tr.toUpperCase(), provider.upiId),
-                    24.height,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        accountWidget(
-                            phoneicon,
-                            "mobile number".tr.toUpperCase(),
-                            provider.phoneNumber),
+                        accountWidget(phoneicon, "Nick name".tr,
+                            provider.nickName, 'nickname'),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () => updatedialog(
+                                context,
+                                'Enter new nick name'.tr,
+                                'nick_name',
+                                provider.nickName),
                             icon: Icon(
                               Icons.edit_outlined,
                               color: Get.isDarkMode ? Colors.white : AppColor,
@@ -182,21 +228,88 @@ class ProfilePageState extends State<ProfilePage>
                       ],
                     ),
                     24.height,
-                    accountWidget(
-                            paymentmethodicon, "Payment methods".tr, "Rp Bank")
-                        .onTap(() {
-                      const PaymentMethodComponent().launch(context);
-                    }),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        accountWidget(phoneicon, "User name".tr,
+                            provider.userName, 'username'),
+                        IconButton(
+                            onPressed: () => updatedialog(
+                                context,
+                                'Enter new user name'.tr,
+                                'user_name',
+                                provider.nickName),
+                            icon: Icon(
+                              Icons.edit_outlined,
+                              color: Get.isDarkMode ? Colors.white : AppColor,
+                            ))
+                      ],
+                    ),
+                    24.height,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        accountWidget(phoneicon, "Full name".tr,
+                            provider.fullName, 'fullname'),
+                        IconButton(
+                            onPressed: () => updatedialog(
+                                context,
+                                'Enter new full name'.tr,
+                                'full_name',
+                                provider.nickName),
+                            icon: Icon(
+                              Icons.edit_outlined,
+                              color: Get.isDarkMode ? Colors.white : AppColor,
+                            ))
+                      ],
+                    ),
+                    24.height,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        accountWidget(
+                            phoneicon, "UPI ID".tr, provider.upiId, 'upi id'),
+                        IconButton(
+                            onPressed: () => updatedialog(
+                                context,
+                                'Enter new UPI ID'.tr,
+                                'upi_id',
+                                provider.nickName),
+                            icon: Icon(
+                              Icons.edit_outlined,
+                              color: Get.isDarkMode ? Colors.white : AppColor,
+                            ))
+                      ],
+                    ),
+                    24.height,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        accountWidget(phoneicon, "Mobile number".tr,
+                            provider.phoneNumber, 'mobile'),
+                        IconButton(
+                            onPressed: () => updatedialog(
+                                context,
+                                'Enter new mobile  number'.tr,
+                                'mobile_number',
+                                provider.nickName),
+                            icon: Icon(
+                              Icons.edit_outlined,
+                              color: Get.isDarkMode ? Colors.white : AppColor,
+                            ))
+                      ],
+                    ),
                     24.height,
                     PopupMenuButton(
                       child: accountWidget(
                           languageicon,
-                          "Language",
-                          prefs.getString('language') == 'English'
+                          "Language".tr,
+                          prefs.getString('language') == 'en'
                               ? 'English'
-                              : 'తెలుగు'),
+                              : 'తెలుగు',
+                          'language'),
                       onSelected: (dynamic v) {
-                        toast("Language Changed");
+                        toast("Language changed".tr);
                       },
                       itemBuilder: (BuildContext context) {
                         List<PopupMenuEntry<Object>> list = [];
@@ -228,8 +341,8 @@ class ProfilePageState extends State<ProfilePage>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        accountWidget(themeImage, "App Theme",
-                            toogle ? "Dark Mode" : "Light Mode"),
+                        accountWidget(themeImage, "App Theme".tr,
+                            toogle ? "Dark mode" : "Light mode", 'theme'),
                         Switch(
                           value: appTheme,
                           onChanged: (value) async {
@@ -265,16 +378,17 @@ class ProfilePageState extends State<ProfilePage>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Privacy and security".toUpperCase(),
+                      Text("PRIVACY AND SECURITY".tr.toUpperCase(),
                           style: Theme.of(context).textTheme.headlineMedium),
                       24.height,
-                      accountWidget(
-                          privacyicon, "Privacy", "Sharing and visibility"),
+                      accountWidget(privacyicon, "Privacy".tr,
+                          "Sharing and visibility".tr, 'privacy'),
                       24.height,
-                      accountWidget(notification, "Notifications",
-                          "Turn notifications on/off"),
+                      accountWidget(notification, "Notifications".tr,
+                          "Turn notifications on/off".tr, 'notifications'),
                       24.height,
-                      accountWidget(securityicon, "Security", "* * * * * *"),
+                      accountWidget(securityicon, "Security".tr, "* * * * * *",
+                          'security'),
                       24.height,
                       InkWell(
                           onTap: () async {
@@ -283,7 +397,7 @@ class ProfilePageState extends State<ProfilePage>
                             try {
                               //  await TtsApi.api('you have logged out'.tr);
                               provider.clearData();
-                              prefs.setString('nickName', '');
+                              prefs.setString('Nick name', '');
                               prefs.setString('pin', '');
                               prefs.setBool('user', false);
                               Get.off(LoginPage());
@@ -295,11 +409,36 @@ class ProfilePageState extends State<ProfilePage>
                               rethrow;
                             }
                           },
-                          child: accountWidget(
-                              logout, "Log out", "Log out from Smart Bank")),
+                          child: accountWidget(logout, "Log out".tr,
+                              "Log out from Smart Bank".tr, 'logout')),
                       24.height,
-                      accountWidget(logouticon, "Close account",
-                          "Delete Smart Bank Account Permanently"),
+                      InkWell(
+                          onTap: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            try {
+                              NetworkServices.deleteUser(
+                                  prefs.getString('Nick name')!);
+                              await TtsApi.api(
+                                  'your account has been deleted'.tr);
+                              provider.clearData();
+                              prefs.setString('Nick name', '');
+                              prefs.setString('pin', '');
+                              prefs.setBool('user', false);
+                              Get.off(LoginPage());
+                              Get.snackbar(
+                                  backgroundColor: Colors.white,
+                                  'success'.tr,
+                                  'your account has been deleted'.tr);
+                            } catch (e) {
+                              rethrow;
+                            }
+                          },
+                          child: accountWidget(
+                              logouticon,
+                              "Close account".tr,
+                              "Delete Smart Bank Account Permanently".tr,
+                              'close'.tr)),
                     ],
                   ).paddingOnly(left: 20, right: 20, top: 10, bottom: 10),
                 ),
@@ -307,22 +446,22 @@ class ProfilePageState extends State<ProfilePage>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Information".toUpperCase(),
+                    Text("INFORMATION".tr,
                         style: Theme.of(context).textTheme.headlineMedium),
                     24.height,
-                    informationWidget(helpicon, "Help & feedback"),
-                    24.height,
-                    informationWidget(privacyicon, "Terms & privacy policy"),
+                    informationWidget(helpicon, "Help & feedback".tr),
                     24.height,
                     FutureBuilder<PackageInfo>(
                       future: PackageInfo.fromPlatform(),
                       builder: (c, snap) {
-                        return informationWidget(versionicon,
-                            "Version ${snap.hasData ? snap.data!.version : ''}");
+                        return informationWidget(
+                            versionicon,
+                            "Developed by : Sai Kumar\n Kusangi and Sravika Malipeddi"
+                                .tr);
                       },
                     ),
                   ],
-                ).paddingOnly(left: 20, right: 20, top: 10, bottom: 20),
+                ).paddingOnly(left: 20, right: 20, top: 10, bottom: 80),
               ],
             ),
           ],
@@ -355,11 +494,25 @@ class ProfilePageState extends State<ProfilePage>
     );
   }
 
-  Widget accountWidget(String image, String title, String phoneNumber) {
+  Widget accountWidget(
+      String image, String title, String phoneNumber, String tag) {
+    final teluguDataProvider = Provider.of<TeluguDataController>(context);
     return FutureBuilder(
         future: trans(phoneNumber),
         builder: (context, snap) {
           if (snap.hasData) {
+            if (tag == 'nickname') {
+              teluguDataProvider.changenick(snap.data);
+            } else if (tag == 'username') {
+              teluguDataProvider.changeuser(snap.data);
+            } else if (tag == 'fullname') {
+              teluguDataProvider.changefull(snap.data);
+            } else if (tag == 'mobile') {
+              teluguDataProvider.changemobile(snap.data);
+            } else if (tag == 'upiid') {
+              teluguDataProvider.chnageupi(snap.data);
+            }
+
             return Column(
               children: [
                 Row(
@@ -416,13 +569,46 @@ class ProfilePageState extends State<ProfilePage>
     );
   }
 
+  updatedialog(dialogContext, hinttext, key, nickname) {
+    TextEditingController controller = TextEditingController();
+    return showDialog(
+        barrierDismissible: true,
+        context: dialogContext,
+        builder: (context) {
+          return AlertDialog(
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    NetworkServices.update(key, controller.text, nickname);
+                    Get.back();
+                  },
+                  child: Text('Update'.tr),
+                )
+              ],
+              title: Text('Update'.tr,
+                  style: primaryTextStyle(
+                      color: ColorBlack, size: 20, weight: FontWeight.bold),
+                  textAlign: TextAlign.start),
+              content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      controller: controller,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(hintText: hinttext),
+                    )
+                  ]));
+        });
+  }
+
   dialogWidget(dialogContext) {
     return showDialog(
       barrierDismissible: true,
       context: dialogContext,
       builder: (context) {
         return AlertDialog(
-          title: Text('Set profile photo',
+          title: Text('Set profile photo'.tr,
               style: primaryTextStyle(
                   color: ColorBlack, size: 20, weight: FontWeight.bold),
               textAlign: TextAlign.start),
@@ -430,14 +616,14 @@ class ProfilePageState extends State<ProfilePage>
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Take photo',
+              Text('Take photo'.tr,
                       style: primaryTextStyle(size: 16, color: ColorBlack))
                   .onTap(() {
                 pickFromCamera();
                 finish(context);
               }),
               20.height,
-              Text('Choose photo',
+              Text('Choose photo'.tr,
                       style: primaryTextStyle(size: 16, color: ColorBlack))
                   .onTap(() {
                 pickFromGallery();

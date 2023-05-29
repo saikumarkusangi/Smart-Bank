@@ -1,10 +1,12 @@
 import 'dart:math';
 
 import 'package:bank/controllers/controllers.dart';
+import 'package:bank/controllers/telugu_data_controller.dart';
 import 'package:bank/utils/utils.dart';
 import 'package:bank/views/features/send/amount_Screen.dart';
 import 'package:bank/views/features/send/to_person.dart';
 import 'package:bank/views/views.dart';
+import 'package:bank/views/widgets/demo.dart';
 import 'package:bank/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'localStrings/localStrings.dart.dart';
 import 'package:quick_actions/quick_actions.dart';
+import 'dart:convert';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -112,6 +115,8 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<MicController>(create: (_) => MicController()),
+          ChangeNotifierProvider<TeluguDataController>(
+              create: (_) => TeluguDataController()),
           ChangeNotifierProvider<BalanceProvider>(
               create: (_) => BalanceProvider()),
           ChangeNotifierProvider<ScrollProvider>(
@@ -241,7 +246,7 @@ class _MyAppState extends State<MyApp> {
               ),
               GetPage(
                 name: '/amountPage',
-                page: () => const AmountPage(
+                page: () => AmountPage(
                   nicknameeng: '',
                   image: '',
                   nickname: '',
@@ -279,9 +284,7 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ],
-            home: SplashScreen(
-              user: user,
-            )));
+            home: SplashScreen(user: user,)));
   }
 }
 
@@ -292,3 +295,4 @@ class MyBehaviour extends ScrollBehavior {
     return child;
   }
 }
+

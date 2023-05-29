@@ -26,7 +26,7 @@ class _TransactionsState extends State<Transactions> {
       backgroundColor: Get.isDarkMode ? backgroundColorDark : backgroundColor,
       appBar: AppBar(
         title: Text(
-          'All Transactions'.tr,
+          'All transactions'.tr,
           style: const TextStyle(color: Colors.white),
         ),
         iconTheme: const IconThemeData(color: Colors.white, size: 24),

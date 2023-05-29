@@ -115,7 +115,7 @@ class ToPersonState extends State<ToPerson> {
                   labelStyle: TextStyle(
                       color: Get.isDarkMode ? Colors.white : Colors.black),
                   floatingLabelStyle: const TextStyle(color: Colors.blue),
-                  label: const Text('Enter recipient name'),
+                  label:  Text('Enter recipient name'.tr),
                   fillColor: white,
                   contentPadding: const EdgeInsets.symmetric(vertical: 20),
                   border: const OutlineInputBorder(
@@ -132,7 +132,7 @@ class ToPersonState extends State<ToPerson> {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(30.0)),
                       borderSide: BorderSide(color: Colors.grey[300]!)),
-                  hintText: 'Enter recipient name',
+                  hintText: 'Enter recipient name'.tr,
                   hintStyle: secondaryTextStyle(
                       size: 18,
                       color: Get.isDarkMode ? Colors.white : Colors.black),
@@ -146,7 +146,7 @@ class ToPersonState extends State<ToPerson> {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
-                  'Recents',
+                  'Recents'.tr,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),

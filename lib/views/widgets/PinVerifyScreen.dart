@@ -135,10 +135,10 @@ class PinVerifyScreenState extends State<PinVerifyScreen> {
                     .trim() ==
                 'success') {
               String msg =
-                  await trans("Money successfully sent to ${widget.name}");
+                  await trans("${'Money successfully sent to'.tr} ${widget.name}");
               TtsApi.api(msg);
               Get.snackbar(
-                  'Success', "Money successfully sent to ${widget.name}",
+                  'Success'.tr, "${'Money successfully sent to'.tr} ${widget.name}",
                   snackPosition: SnackPosition.TOP,backgroundColor: Colors.white);
               provider.currentBalance = '';
               provider.history.clear();
@@ -151,16 +151,16 @@ class PinVerifyScreenState extends State<PinVerifyScreen> {
             }
             if (response.split(':')[2].replaceAll(RegExp("'"), '') ==
                 " invalid json message format or no message}") {
-              TtsApi.api("no user found with name");
-              Get.snackbar('Something went wrong', "no user found with name ",
+              TtsApi.api("No user found with name".tr);
+              Get.snackbar('Something went wrong'.tr, "No user found with name ".tr,
                   snackPosition: SnackPosition.TOP,backgroundColor: Colors.white);
             }
 
             if (response.split(':')[2].replaceAll(RegExp("'"), '') ==
-                " maximum transaction amount limit is 100 rupees}") {
-              TtsApi.api("maximum transaction amount limit is 100 rupees");
-              Get.snackbar('Something went wrong',
-                  "maximum transaction amount limit is 100 rupees",
+                " maximum transaction amount limit is 100 rupees".tr) {
+              TtsApi.api("maximum transaction amount limit is 100 rupees".tr);
+              Get.snackbar('Something went wrong'.tr,
+                  "maximum transaction amount limit is 100 rupees".tr,
                   snackPosition: SnackPosition.TOP,backgroundColor: Colors.white);
             }
           } else if (widget.page == 'balance' && widget.auth) {
@@ -172,9 +172,9 @@ class PinVerifyScreenState extends State<PinVerifyScreen> {
         }
       },
       cancelButton: cancelButton!,
-      deleteButton: const Text('Delete',
-          style: TextStyle(fontSize: 18, color: Colors.white),
-          semanticsLabel: 'Delete'),
+      deleteButton: Text('Delete'.tr,
+          style: const TextStyle(fontSize: 18, color: Colors.white),
+          semanticsLabel: 'Delete'.tr),
       shouldTriggerVerification: _verificationNotifier.stream,
       backgroundColor: AppColor,
       digits: digits,

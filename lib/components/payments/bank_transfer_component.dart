@@ -30,7 +30,7 @@ class BankTransferComponentState extends State<BankTransferComponent> {
         backgroundColor: AppColor,
         elevation: 2,
         automaticallyImplyLeading: true,
-        title: Text("Enter Bank Details",
+        title: Text("Enter Bank Details".tr,
             style: primaryTextStyle(color: backgroundColor)),
         actions: [
           PopupMenuButton(
@@ -70,7 +70,7 @@ class BankTransferComponentState extends State<BankTransferComponent> {
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
                         labelStyle: Theme.of(context).textTheme.bodySmall,
-                        labelText: "Account Number",
+                        labelText: "Account number".tr,
                         focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: AppColor)),
                         enabledBorder: const UnderlineInputBorder(
@@ -85,7 +85,7 @@ class BankTransferComponentState extends State<BankTransferComponent> {
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
                         labelStyle: Theme.of(context).textTheme.bodySmall,
-                        labelText: "Re-enter account number",
+                        labelText: "Re-enter account number".tr,
                         focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: AppColor)),
                         enabledBorder: const UnderlineInputBorder(
@@ -97,7 +97,7 @@ class BankTransferComponentState extends State<BankTransferComponent> {
                     Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          "Search for IFSC",
+                          "Search for IFSC".tr,
                           style: Theme.of(context).textTheme.bodySmall,
                         )),
                     TextFormField(
@@ -106,7 +106,7 @@ class BankTransferComponentState extends State<BankTransferComponent> {
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
                         labelStyle: Theme.of(context).textTheme.bodySmall,
-                        labelText: "IFSC",
+                        labelText: "IFSC".tr,
                         focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: AppColor)),
                         enabledBorder: const UnderlineInputBorder(
@@ -121,7 +121,7 @@ class BankTransferComponentState extends State<BankTransferComponent> {
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
                         labelStyle: Theme.of(context).textTheme.bodySmall,
-                        labelText: "Recipient name",
+                        labelText: "Recipient name".tr,
                         focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: AppColor)),
                         enabledBorder: const UnderlineInputBorder(
@@ -142,7 +142,7 @@ class BankTransferComponentState extends State<BankTransferComponent> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "This information will be securely saved as per the Rp Bank Terms of Services and Privacy Policy.",
+                      "This information will be securely saved as per the RP Bank Terms of Services and Privacy Policy.".tr,
                       style: Theme.of(context).textTheme.bodySmall,
                       textAlign: TextAlign.center,
                     ).paddingOnly(left: 20, right: 20),
@@ -151,7 +151,7 @@ class BankTransferComponentState extends State<BankTransferComponent> {
                       width: MediaQuery.of(context).size.width,
                       height: 50,
                       color: AppColor,
-                      title: 'Continue',
+                      title: 'Continue'.tr,
                       titleColor: Colors.white,
                       titleSize: 14,
                       onPressed: () {

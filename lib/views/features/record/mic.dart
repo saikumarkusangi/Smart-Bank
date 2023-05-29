@@ -14,11 +14,13 @@ import '../../../utils/images.dart';
 class Mic extends StatefulWidget {
   String nickname;
   String img;
-   Mic(
+  String name;
+  Mic(
       {Key? key,
       required this.currentRoute,
       this.nickname = '',
-      this.img = ''})
+      this.img = '',
+      this.name = ''})
       : super(key: key);
   final String currentRoute;
   @override
@@ -32,6 +34,7 @@ class _MicState extends State<Mic> {
   bool listening = false;
   bool availableMic = false;
   String output = 'Listening....';
+  String teloutput = 'వింటుంది';
   bool longpress = false;
   @override
   void initState() {
@@ -47,6 +50,7 @@ class _MicState extends State<Mic> {
         .then((value) {
       setState(() {
         output = value.toString();
+        teloutput = value.toString();
       });
     });
   }
@@ -54,7 +58,7 @@ class _MicState extends State<Mic> {
   @override
   Widget build(BuildContext context) {
     final micProvider = Provider.of<MicController>(context);
-     micProvider.setDetails(widget.nickname, widget.img);
+    micProvider.setDetails(widget.nickname, widget.img);
     checkMic() async {
       await _speech.initialize();
     }
@@ -72,14 +76,37 @@ class _MicState extends State<Mic> {
           recognizedwords = val.recognizedWords;
           trans(recognizedwords);
         });
-        
+
         micProvider.text.add(recognizedwords.toLowerCase());
       });
 
       micProvider.text.add(recognizedwords.toLowerCase());
-      micProvider.listen(context, widget.currentRoute);
+      micProvider.listen(context, widget.currentRoute, widget.name);
       micProvider.setEmpty();
-      setState(() {
+    if(Get.locale!.languageCode == 'te'){
+  setState(() {
+        if (teloutput != 'వింటుంది....') {
+          micProvider.listening(false);
+          Future.delayed(const Duration(seconds: 3), () {
+            setState(() {
+              teloutput = '';
+            });
+          });
+        }
+        if (micProvider.notFound == true && teloutput == '') {
+          // TtsApi.api('No recognized try again');
+          // SpeechController.listen('No recognized try again');
+          micProvider.setNotFound(false);
+          micProvider.text.add('try again'.tr);
+          setState(() {
+            teloutput = 'try again'.tr;
+          });
+        }
+
+        recognizedwords = '';
+      });
+    }else{
+  setState(() {
         if (output != 'Listening....') {
           micProvider.listening(false);
           Future.delayed(const Duration(seconds: 3), () {
@@ -92,7 +119,7 @@ class _MicState extends State<Mic> {
           // TtsApi.api('No recognized try again');
           // SpeechController.listen('No recognized try again');
           micProvider.setNotFound(false);
-          micProvider.text.add('try again');
+          micProvider.text.add('try again'.tr);
           setState(() {
             output = 'try again';
           });
@@ -100,6 +127,7 @@ class _MicState extends State<Mic> {
 
         recognizedwords = '';
       });
+    }
     } else {
       // setState(() {
       //   micProvider.listening(false);
@@ -150,7 +178,7 @@ class _MicState extends State<Mic> {
               child: GestureDetector(
                 onLongPressStart: (v) async {
                   setState(() {
-                    output = 'Listening....';
+                    output = 'Listening....'.tr;
                     longpress = true;
                   });
                   micProvider.listening(true);
@@ -165,10 +193,10 @@ class _MicState extends State<Mic> {
                     micProvider.text.add(recognizedwords.toLowerCase());
                   });
                   micProvider.text.add(recognizedwords.toLowerCase());
-                  micProvider.listen(context, widget.currentRoute);
+                  micProvider.listen(context, widget.currentRoute, widget.name);
                   micProvider.setEmpty();
                   setState(() {
-                    output = 'Listening....';
+                    output = 'Listening....'.tr;
                     recognizedwords = '';
                   });
                   // Timer(Duration(seconds: 3), () {
@@ -186,14 +214,14 @@ class _MicState extends State<Mic> {
                   micProvider.listening(false);
                   _speech.stop();
                   micProvider.text.add(recognizedwords.toLowerCase());
-                  micProvider.listen(context, widget.currentRoute);
+                  micProvider.listen(context, widget.currentRoute, widget.name);
                   if (micProvider.notFound == true && output == '') {
                     // TtsApi.api('No recognized try again');
                     // SpeechController.listen('No recognized try again');
                     micProvider.setNotFound(false);
                     micProvider.text.add('try again');
                     setState(() {
-                      output = 'try again';
+                      output = '';
                       recognizedwords = '';
                     });
                   }
@@ -213,7 +241,7 @@ class _MicState extends State<Mic> {
               ),
             ),
           ),
-          Positioned(
+         Get.locale!.languageCode == 'en' ? Positioned(
               top: 100,
               left: 20,
               right: 20,
@@ -227,14 +255,29 @@ class _MicState extends State<Mic> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+              )):
+              Positioned(
+              top: 100,
+              left: 20,
+              right: 20,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  teloutput.toString(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               )),
-          const Align(
+          Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(bottom: 20),
+              padding: const EdgeInsets.only(bottom: 20),
               child: Text(
-                'Long Press to try again',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                'Long press to try again'.tr,
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
           )

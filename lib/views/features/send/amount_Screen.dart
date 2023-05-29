@@ -15,9 +15,11 @@ class AmountPage extends StatefulWidget {
   final String image;
   final String nickname;
   final String nicknameeng;
+  String amount;
 
-  const AmountPage(
+  AmountPage(
       {super.key,
+      this.amount = '',
       required this.image,
       required this.nickname,
       required this.nicknameeng});
@@ -32,6 +34,11 @@ class AmountPageState extends State<AmountPage> {
   @override
   Widget build(BuildContext context) {
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+    // if (widget.amount.isNotEmpty) {
+    //   setState(() {
+    //     text = widget.amount;
+    //   });
+    // }
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColor,
@@ -95,7 +102,13 @@ class AmountPageState extends State<AmountPage> {
                         style:
                             primaryTextStyle(color: backgroundColor, size: 18)),
                     15.height,
-                    Text('\u{20B9} $text',
+                    widget.amount.isNotEmpty ?
+                    Text('\u{20B9} ${widget.amount}',
+                        style: primaryTextStyle(
+                            color: backgroundColor,
+                            size: 40,
+                            weight: FontWeight.bold)):
+                             Text('\u{20B9} $text',
                         style: primaryTextStyle(
                             color: backgroundColor,
                             size: 40,
@@ -199,6 +212,7 @@ class AmountPageState extends State<AmountPage> {
           ),
           onPressed: () {
             Get.to(Mic(
+              name: widget.nicknameeng,
               currentRoute: '/AmountPage',
             ));
             // ExploreScreen().launch(context);

@@ -108,9 +108,9 @@ class PinPage extends StatelessWidget {
                                     1)
                             .trim() ==
                         'success') {
-                      TtsApi.api("Money successfully sent to ${to.text}");
+                      TtsApi.api("${'Money successfully sent to'.tr} ${to.text}".tr);
                       Get.snackbar(
-                          'Success', "Money successfully sent to ${to.text}",
+                          'Success'.tr, "${'Money successfully sent to'.tr} ${to.text}".tr,
                           backgroundColor: Colors.white,
                           snackPosition: SnackPosition.TOP);
                       provider.currentBalance = '';
@@ -124,18 +124,18 @@ class PinPage extends StatelessWidget {
                     }
                     if (response.split(':')[2].replaceAll(RegExp("'"), '') ==
                         " invalid json message format or no message}") {
-                      TtsApi.api("no user found with name ${to.text}");
-                      Get.snackbar('Something went wrong',
-                          "no user found with name ${to.text}",
+                      TtsApi.api( "${'No user found with name'.tr}${to.text}");
+                      Get.snackbar('Something went wrong'.tr,
+                          "${'No user found with name'.tr} ${to.text}",
                           snackPosition: SnackPosition.TOP,backgroundColor: Colors.white);
                     }
 
                     if (response.split(':')[2].replaceAll(RegExp("'"), '') ==
-                        " maximum transaction amount limit is 100 rupees}") {
+                        " maximum transaction amount limit is 100 rupees}".tr) {
                       TtsApi.api(
-                          "maximum transaction amount limit is 100 rupees");
-                      Get.snackbar('Something went wrong',
-                          "maximum transaction amount limit is 100 rupees",
+                          "maximum transaction amount limit is 100 rupees".tr);
+                      Get.snackbar('Something went wrong'.tr,
+                          "maximum transaction amount limit is 100 rupees".tr,
                           snackPosition: SnackPosition.TOP,backgroundColor: Colors.white);
                     }
                   }

@@ -161,7 +161,7 @@ class MessageComponentState extends State<MessageComponent> {
                         : Alignment.centerLeft,
                     child: Container(
                       padding: const EdgeInsets.all(10),
-                      height: 120,
+                      height: 125,
                       width: MediaQuery.of(context).size.width / 2,
                       decoration: BoxDecoration(
                           borderRadius:
@@ -194,7 +194,8 @@ class MessageComponentState extends State<MessageComponent> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '${msgs[index].date!.split("-")[2]} ${months[int.parse(msgs[index].date!.split("-")[1]) - 1]} ${int.parse(msgs[index].date!.split("-")[0])}',
+                               Get.locale!.languageCode == 'te' ? '${msgs[index].date!.split("-")[2]} ${telugumonths[int.parse(msgs[index].date!.split("-")[1]) - 1]} ${int.parse(msgs[index].date!.split("-")[0])}'
+                               : '${msgs[index].date!.split("-")[2]} ${months[int.parse(msgs[index].date!.split("-")[1]) - 1]} ${int.parse(msgs[index].date!.split("-")[0])}',
                                 style: const TextStyle(
                                     fontSize: 12, color: Colors.black45),
                               ),
